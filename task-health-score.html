@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Health Score</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .score-widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .widget-header {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+        }
+
+        .widget-title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        .widget-subtitle {
+            font-size: 13px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        .scores-container {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .score-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .score-card:hover {
+            border-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+        }
+
+        .score-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .score-value {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .score-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .task-health .score-value {
+            color: #059669;
+        }
+
+        .task-health .score-icon {
+            color: #059669;
+        }
+
+        .store-score .score-value {
+            color: #f59e0b;
+        }
+
+        .store-score .score-icon {
+            color: #f59e0b;
+        }
+
+        .score-subtitle {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .score-percentage {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .positive {
+            color: #059669;
+        }
+
+        .negative {
+            color: #dc2626;
+        }
+
+        .neutral {
+            color: #6b7280;
+        }
+
+        .details-section {
+            padding: 0 24px 24px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: background 0.15s ease;
+        }
+
+        .detail-row:hover {
+            background: #f3f4f6;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-good {
+            background: #059669;
+        }
+
+        .status-warning {
+            background: #f59e0b;
+        }
+
+        .status-critical {
+            background: #dc2626;
+        }
+
+        .refresh-info {
+            padding: 16px 24px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 0;
+            }
+
+            .score-widget {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+
+            .widget-header {
+                padding: 20px 16px;
+            }
+
+            .scores-container {
+                grid-template-columns: 1fr;
+                padding: 20px 16px;
+                gap: 12px;
+            }
+            
+            .score-card {
+                padding: 20px;
+            }
+
+            .details-section {
+                padding: 0 16px 20px;
+            }
+
+            .detail-row {
+                padding: 12px 12px;
+            }
+
+            .refresh-info {
+                padding: 12px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="score-widget">
+        <div class="widget-header">
+            <div class="widget-title">Task Health Score</div>
+            <div class="widget-subtitle">Real-time scoring metrics</div>
+        </div>
+
+        <div class="scores-container">
+            <div class="score-card task-health">
+                <div class="score-label">Task Health</div>
+                <div class="score-icon">✓</div>
+                <div class="score-value" id="taskHealthScore">92</div>
+                <div class="score-subtitle">Health Score</div>
+                <div class="score-percentage positive" id="taskHealthTrend">↑ 5% vs last week</div>
+            </div>
+
+            <div class="score-card store-score">
+                <div class="score-label">Store Score</div>
+                <div class="score-icon">★</div>
+                <div class="score-value" id="storeScore">88</div>
+                <div class="score-subtitle">Overall Rating</div>
+                <div class="score-percentage positive" id="storeScoreTrend">↑ 3% vs last week</div>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    Tasks Completed
+                </div>
+                <div class="detail-value" id="tasksCompleted">47/50</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-warning"></span>
+                    Tasks In Progress
+                </div>
+                <div class="detail-value" id="tasksInProgress">3</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    On-Time Completion
+                </div>
+                <div class="detail-value" id="onTimeRate">94%</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    Team Compliance
+                </div>
+                <div class="detail-value" id="complianceRate">96%</div>
+            </div>
+        </div>
+
+        <div class="refresh-info">
+            Last updated: <span id="lastUpdated">Just now</span>
+        </div>
+    </div>
+
+    <script>
+        // Sample function to update scores dynamically
+        function updateScores(taskHealth, storeScore, metrics) {
+            // Update main scores
+            document.getElementById('taskHealthScore').textContent = taskHealth;
+            document.getElementById('storeScore').textContent = storeScore;
+            
+            // Update metrics if provided
+            if (metrics) {
+                if (metrics.tasksCompleted) {
+                    document.getElementById('tasksCompleted').textContent = metrics.tasksCompleted;
+                }
+                if (metrics.tasksInProgress) {
+                    document.getElementById('tasksInProgress').textContent = metrics.tasksInProgress;
+                }
+                if (metrics.onTimeRate) {
+                    document.getElementById('onTimeRate').textContent = metrics.onTimeRate + '%';
+                }
+                if (metrics.complianceRate) {
+                    document.getElementById('complianceRate').textContent = metrics.complianceRate + '%';
+                }
+            }
+            
+            // Update timestamp
+            document.getElementById('lastUpdated').textContent = 'Just now';
+        }
+
+        // Example: Update scores from WorkJam data
+        // This would connect to your WorkJam scoring API
+        function fetchWorkJamScores() {
+            // Replace with actual WorkJam API call
+            // fetch('/api/workjam/scores')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         updateScores(data.taskHealth, data.storeScore, data.metrics);
+            //     });
+            
+            console.log('Ready to fetch WorkJam scores');
+        }
+
+        // Auto-refresh every 5 minutes
+        setInterval(fetchWorkJamScores, 300000);
+
+        // Initialize
+        fetchWorkJamScores();
+    </script>
+</body>
+</html>

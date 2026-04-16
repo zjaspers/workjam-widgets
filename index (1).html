@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WorkJam Widgets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 400;
+        }
+
+        .widgets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .widget-card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .widget-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+
+        .widget-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .widget-description {
+            font-size: 14px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .widget-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #059669;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.2s ease;
+        }
+
+        .widget-link:hover {
+            background: #047857;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 30px 20px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .widgets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .widget-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>WorkJam Widgets</h1>
+            <p>Embeddable HTML widgets for WorkJam demos</p>
+        </div>
+
+        <div class="widgets-grid">
+            <div class="widget-card">
+                <div class="widget-icon">✅</div>
+                <h2 class="widget-title">Task Health Score</h2>
+                <p class="widget-description">
+                    Real-time task health and store performance metrics with trend indicators, completion rates, and compliance tracking.
+                </p>
+                <a href="task-health-score.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">📊</div>
+                <h2 class="widget-title">Task Dashboard</h2>
+                <p class="widget-description">
+                    Task analytics overview with completion rates, at-risk regions, active tasks, and upcoming visual sets.
+                </p>
+                <a href="task_dashboard.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">🏪</div>
+                <h2 class="widget-title">C-Store Sales Dashboard</h2>
+                <p class="widget-description">
+                    Convenience store sales performance metrics and analytics dashboard.
+                </p>
+                <a href="CStoreSalesDash.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">🍽️</div>
+                <h2 class="widget-title">Restaurant Sales</h2>
+                <p class="widget-description">
+                    Restaurant sales metrics and performance tracking widget.
+                </p>
+                <a href="WJ_Restaurant_Sales.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">📋</div>
+                <h2 class="widget-title">Task Real-Time</h2>
+                <p class="widget-description">
+                    Real-time task monitoring and execution tracking.
+                </p>
+                <a href="WJ_Task_Real.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">⚠️</div>
+                <h2 class="widget-title">DRR Mutilation Impact</h2>
+                <p class="widget-description">
+                    DRR mutilation impact tracking with target vs. actual performance metrics.
+                </p>
+                <a href="drr_mutilation_widget.html" class="widget-link">View Widget</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Built for WorkJam • Designed with Cal AI principles</p>
+        </div>
+    </div>
+</body>
+</html>
