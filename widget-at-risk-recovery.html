@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At-Risk Store Recovery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 32px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+        }
+
+        .header-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+
+        .header-stat {
+            font-size: 64px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 16px 0;
+            letter-spacing: -2px;
+        }
+
+        .header-insight {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .problem-section {
+            padding: 32px;
+            background: #fef2f2;
+        }
+
+        .problem-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .problem-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .problem-value {
+            font-size: 40px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #dc2626;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .problem-label {
+            font-size: 13px;
+            color: #71717a;
+            font-weight: 600;
+        }
+
+        .examples-section {
+            padding: 32px;
+        }
+
+        .examples-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .example-store {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .example-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 8px;
+        }
+
+        .example-metrics {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+
+        .example-metric {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #dc2626;
+        }
+
+        .recovery-plan {
+            padding: 32px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .plan-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .week-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .week-card:hover {
+            border-color: #dc2626;
+            box-shadow: 0 4px 16px rgba(220, 38, 38, 0.15);
+        }
+
+        .week-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .week-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .week-goal {
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #059669;
+        }
+
+        .week-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 8px;
+        }
+
+        .week-actions {
+            font-size: 14px;
+            color: #71717a;
+            line-height: 1.6;
+        }
+
+        .impact-box {
+            background: #ecfdf5;
+            border: 2px solid #10b981;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 24px;
+        }
+
+        .impact-stat {
+            font-size: 40px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #10b981;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+        }
+
+        .impact-text {
+            font-size: 15px;
+            color: #18181b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 640px) {
+            .header, .problem-section, .examples-section, .recovery-plan {
+                padding: 24px;
+            }
+
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-label">Critical Action Required</div>
+            <div class="header-title">At-Risk Store Recovery</div>
+            <div class="header-stat">303</div>
+            <div class="header-insight">21.7% of your network is both disengaged and underperforming. Each represents a location where WorkJam isn't working yet—and significant upside if you can turn them around.</div>
+        </div>
+
+        <div class="problem-section">
+            <div class="problem-title">⚠️ The Problem</div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-value">81.4%</div>
+                    <div class="problem-label">Task Completion</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-value">72.6%</div>
+                    <div class="problem-label">On-Time Rate</div>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-value">Low</div>
+                    <div class="problem-label">Engagement</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <div class="examples-title">Specific Stores Needing Immediate Attention</div>
+
+            <div class="example-store">
+                <div class="example-name">Tarpon Springs, FL</div>
+                <div class="example-metrics">
+                    <div>Task Completion: <span class="example-metric">0%</span></div>
+                    <div>Status: <span class="example-metric">Critical</span></div>
+                </div>
+            </div>
+
+            <div class="example-store">
+                <div class="example-name">Homestead, PA</div>
+                <div class="example-metrics">
+                    <div>Task Completion: <span class="example-metric">11%</span></div>
+                    <div>Status: <span class="example-metric">Critical</span></div>
+                </div>
+            </div>
+
+            <div class="example-store">
+                <div class="example-name">District 7 - Southeast Region</div>
+                <div class="example-metrics">
+                    <div>Average Completion: <span class="example-metric">21%</span></div>
+                    <div>At-Risk Count: <span class="example-metric">47 stores</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="recovery-plan">
+            <div class="plan-title">30-Day Recovery Playbook</div>
+
+            <div class="week-card" onclick="viewWeek(1)">
+                <div class="week-header">
+                    <div class="week-label">Week 1</div>
+                    <div class="week-goal">Goal: 50%</div>
+                </div>
+                <div class="week-title">Diagnose & Stabilize</div>
+                <div class="week-actions">• District leader site visit to Tarpon Springs & Homestead<br>• Interview manager + 3 team members<br>• Identify blockers (tech access? training? staffing?)<br>• Set one simple daily task: morning team check-in</div>
+            </div>
+
+            <div class="week-card" onclick="viewWeek(2)">
+                <div class="week-header">
+                    <div class="week-label">Week 2</div>
+                    <div class="week-goal">Goal: 65%</div>
+                </div>
+                <div class="week-title">Build Basic Execution Rhythm</div>
+                <div class="week-actions">• Manager assigns 3 tasks daily (visual merch priority)<br>• Daily 5-min huddle to review task list<br>• District leader checks in via WorkJam daily<br>• Celebrate first week above 50%</div>
+            </div>
+
+            <div class="week-card" onclick="viewWeek(3)">
+                <div class="week-header">
+                    <div class="week-label">Week 3</div>
+                    <div class="week-goal">Goal: 75%</div>
+                </div>
+                <div class="week-title">Increase Complexity & Engagement</div>
+                <div class="week-actions">• Add back-of-house tasks (inventory control)<br>• Manager reacts to all team posts<br>• Launch weekly team survey<br>• Pair with nearby Model Store for peer coaching</div>
+            </div>
+
+            <div class="week-card" onclick="viewWeek(4)">
+                <div class="week-header">
+                    <div class="week-label">Week 4</div>
+                    <div class="week-goal">Goal: 85%+</div>
+                </div>
+                <div class="week-title">Sustain & Scale</div>
+                <div class="week-actions">• Full task load (visual + inventory + compliance)<br>• Manager runs independent daily routine<br>• Team engagement normalized<br>• Share success story with district as recovery model</div>
+            </div>
+
+            <div class="impact-box">
+                <div class="impact-stat">+11.3pts</div>
+                <div class="impact-text">Moving one store from At-Risk (81.4%) to network average (92.7%) = 11.3pt improvement. At scale across 303 stores, that's transformational for your network performance.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function viewWeek(week) {
+            const details = {
+                1: 'Week 1 Detailed Actions:\n\nMonday: District leader schedules site visits\nTuesday: On-site at Tarpon Springs (full day)\nWednesday: On-site at Homestead (full day)\nThursday: Debrief + create recovery plan\nFriday: Launch simple daily check-in task\n\nGoal: Understand root cause, stabilize to 50%',
+                2: 'Week 2 Detailed Actions:\n\nDaily: Manager assigns 3 visual merch tasks\nDaily: 5-min team huddle at 9am\nDaily: District leader checks WorkJam feed\nFriday: Celebrate hitting 50%+ completion\n\nGoal: Build basic rhythm, hit 65%',
+                3: 'Week 3 Detailed Actions:\n\nMonday: Add 2 inventory control tasks\nDaily: Manager engagement (reactions + comments)\nWednesday: Launch weekly team survey\nFriday: Video call with Model Store peer\n\nGoal: Increase load + engagement, hit 75%',
+                4: 'Week 4 Detailed Actions:\n\nMonday: Full task load activated\nDaily: Manager runs routine independently\nWednesday: Team engagement review\nFriday: Success story shared with district\n\nGoal: Self-sufficient execution, hit 85%+'
+            };
+            alert(details[week]);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Completion</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;700&family=JetBrains+Mono:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 8px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.2), 0 8px 24px rgba(5, 150, 105, 0.3);
+            min-width: 160px;
+            max-width: 200px;
+            border: 3px solid #059669;
+        }
+
+        .metric-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .metric-value {
+            font-size: 56px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: #065f46;
+            line-height: 1;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #047857;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-change {
+            font-size: 11px;
+            color: #065f46;
+            margin-top: 8px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="metric-card">
+        <div class="metric-icon">✅</div>
+        <div class="metric-value">92.7%</div>
+        <div class="metric-label">Task Completion</div>
+        <div class="metric-change">↑ Top tier</div>
+    </div>
+</body>
+</html>
