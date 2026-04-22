@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At-Risk Stores - Regional View</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+
+```
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'DM Sans', sans-serif;
+        background: transparent;
+        padding: 0;
+        margin: 0;
+        min-width: 220px;
+        max-width: 900px;
+    }
+    
+    .widget {
+        min-width: 220px;
+        max-width: 900px;
+        width: 100%;
+        margin: 0;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .header {
+        padding: 24px 20px;
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    .header-title {
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        margin-bottom: 4px;
+    }
+
+    .header-subtitle {
+        font-size: 13px;
+        opacity: 0.95;
+        font-weight: 500;
+    }
+
+    .region-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 700;
+        font-family: 'JetBrains Mono', monospace;
+        margin-top: 6px;
+    }
+
+    .summary-section {
+        padding: 20px;
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+        border-bottom: 3px solid #dc2626;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .summary-card {
+        background: white;
+        border: 2px solid #dc2626;
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+    }
+
+    .summary-value {
+        font-size: 40px;
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+        color: #dc2626;
+        line-height: 1;
+        margin-bottom: 6px;
+        letter-spacing: -2px;
+        text-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+    }
+
+    .summary-label {
+        font-size: 10px;
+        color: #991b1b;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stores-section {
+        padding: 20px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        font-weight: 800;
+        color: #71717a;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .city-label {
+        font-size: 12px;
+        font-weight: 800;
+        color: #dc2626;
+        background: #fee2e2;
+        padding: 4px 10px;
+        border-radius: 6px;
+    }
+
+    .store-card {
+        background: linear-gradient(135deg, #ffffff 0%, #fef2f2 100%);
+        border: 2px solid #fca5a5;
+        border-radius: 12px;
+        padding: 16px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .store-card:hover {
+        border-color: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+    }
+
+    .store-card.critical {
+        border-color: #dc2626;
+        background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    }
+
+    .store-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 12px;
+    }
+
+    .store-info {
+        flex: 1;
+    }
+
+    .store-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: #18181b;
+        margin-bottom: 4px;
+    }
+
+    .store-address {
+        font-size: 11px;
+        color: #71717a;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .store-status {
+        font-size: 10px;
+        font-weight: 800;
+        color: #dc2626;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .store-metrics {
+        text-align: right;
+    }
+
+    .metric-value {
+        font-size: 24px;
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+        line-height: 1;
+        margin-bottom: 4px;
+        letter-spacing: -1px;
+    }
+
+    .critical .metric-value {
+        color: #dc2626;
+    }
+
+    .store-card:not(.critical) .metric-value {
+        color: #f59e0b;
+    }
+
+    .metric-label {
+        font-size: 9px;
+        color: #71717a;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .store-issues {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+
+    .issue-badge {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .issue-count {
+        font-size: 18px;
+        font-weight: 800;
+        font-family: 'JetBrains Mono', monospace;
+        color: #dc2626;
+        line-height: 1;
+        margin-bottom: 4px;
+    }
+
+    .issue-label {
+        font-size: 9px;
+        color: #71717a;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .action-section {
+        padding: 20px;
+        background: #f9fafb;
+    }
+
+    .action-button {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        color: white;
+        text-align: center;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 800;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        transition: all 0.3s ease;
+        margin-bottom: 12px;
+    }
+
+    .action-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+    }
+
+    .action-button.secondary {
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .action-button.secondary:hover {
+        box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+    }
+
+    @media (max-width: 600px) {
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .store-issues {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header {
+            padding: 20px 16px;
+        }
+
+        .summary-section,
+        .stores-section,
+        .action-section {
+            padding: 16px;
+        }
+
+        .summary-value {
+            font-size: 36px;
+        }
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-title">🚨 At-Risk Stores</div>
+            <div class="header-subtitle">Regional Manager Dashboard</div>
+            <div class="region-badge" id="region-name">Columbus & Cleveland Region</div>
+        </div>
+
+```
+    <div class="summary-section">
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-value">11</div>
+                <div class="summary-label">At-Risk Stores</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">3.2</div>
+                <div class="summary-label">Avg CSAT Score</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-value">23</div>
+                <div class="summary-label">Failed Audits</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stores-section">
+        <div class="section-header">
+            <div class="section-title">🔴 Critical - Columbus Area</div>
+            <div class="city-label">5 Stores</div>
+        </div>
+
+        <div class="store-card critical" onclick="openStore('30444')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #30444 - Polaris</div>
+                    <div class="store-address">2847 Polaris Pkwy, Columbus OH</div>
+                    <div class="store-status">🔴 Critical - 7 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">2.8</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">4</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">2</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">3</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="store-card critical" onclick="openStore('30110')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #30110 - Easton</div>
+                    <div class="store-address">4128 Morse Rd, Columbus OH</div>
+                    <div class="store-status">🔴 Critical - 6 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">2.9</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">6</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">3</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">2</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="store-card" onclick="openStore('1312')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #1312 - Hilliard</div>
+                    <div class="store-address">3621 Cemetery Rd, Hilliard OH</div>
+                    <div class="store-status">🟠 High Risk - 4 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">3.4</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">4</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">1</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">1</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="stores-section" style="padding-top: 0;">
+        <div class="section-header">
+            <div class="section-title">🔴 Critical - Cleveland Area</div>
+            <div class="city-label">6 Stores</div>
+        </div>
+
+        <div class="store-card critical" onclick="openStore('2103')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #2103 - Westlake</div>
+                    <div class="store-address">24800 Center Ridge Rd, Westlake OH</div>
+                    <div class="store-status">🔴 Critical - 8 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">2.6</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">8</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">4</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">3</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="store-card critical" onclick="openStore('2147')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #2147 - Parma</div>
+                    <div class="store-address">6420 Pearl Rd, Parma OH</div>
+                    <div class="store-status">🔴 Critical - 5 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">2.9</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">5</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">2</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">4</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="store-card" onclick="openStore('2198')">
+            <div class="store-header">
+                <div class="store-info">
+                    <div class="store-name">Store #2198 - Mentor</div>
+                    <div class="store-address">8900 Mentor Ave, Mentor OH</div>
+                    <div class="store-status">🟠 High Risk - 3 overdue items</div>
+                </div>
+                <div class="store-metrics">
+                    <div class="metric-value">3.5</div>
+                    <div class="metric-label">CSAT Score</div>
+                </div>
+            </div>
+            <div class="store-issues">
+                <div class="issue-badge">
+                    <div class="issue-count">3</div>
+                    <div class="issue-label">Overdue</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">2</div>
+                    <div class="issue-label">Failed Audits</div>
+                </div>
+                <div class="issue-badge">
+                    <div class="issue-count">1</div>
+                    <div class="issue-label">Compliance</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-section">
+        <a href="https://app-next.workjamdemo.com/audits" class="action-button">
+            View All Tasks & Audits →
+        </a>
+        <a href="https://app-next.workjamdemo.com/audits" class="action-button secondary">
+            Generate Recovery Plan
+        </a>
+    </div>
+</div>
+
+<script>
+    // Get WorkJam URL variables
+    const urlParams = new URLSearchParams(window.location.search);
+    const regionId = urlParams.get('regionId') || urlParams.get('externalRegionId');
+    const regionCode = urlParams.get('regionCode') || urlParams.get('externalRegionCode');
+
+    if (regionCode) {
+        document.getElementById('region-name').textContent = regionCode + ' Region';
+    }
+
+    function openStore(storeId) {
+        // In production, this would deep-link to specific store's audit page
+        window.location.href = 'https://app-next.workjamdemo.com/audits';
+    }
+
+    console.log('At-Risk Stores Widget loaded for region:', regionId);
+</script>
+```
+
+</body>
+</html>
