@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melbourne Weather</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+        }
+
+        .weather-widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget-header {
+            padding: 20px 16px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+        }
+
+        .header-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .weather-container {
+            padding: 16px;
+            background: #f0f9ff;
+        }
+
+        /* Let weatherwidget.io use its own styles */
+        .weatherwidget-io {
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .widget-header {
+                padding: 16px 12px;
+            }
+
+            .weather-container {
+                padding: 12px;
+            }
+
+            .header-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="weather-widget">
+        <div class="widget-header">
+            <div class="header-icon">🌤️</div>
+            <div class="header-title">Melbourne Weather</div>
+        </div>
+
+        <div class="weather-container">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-theme="original">MELBOURNE WEATHER</a>
+        </div>
+    </div>
+
+    <script>
+    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+    </script>
+</body>
+</html>

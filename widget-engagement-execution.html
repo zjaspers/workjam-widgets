@@ -1,35 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Engagement Drives Results</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:transparent;padding:0;margin:0}
-.widget{width:100%;max-width:760px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px rgba(17,24,39,.06), 0 10px 28px rgba(17,24,39,.10)}
-.header{padding:20px 22px 18px;background:linear-gradient(135deg,#6366f1 0%, #4f46e5 100%);color:#fff}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:8px}
-.title-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
-.title{font-size:28px;line-height:1.05;font-weight:700;letter-spacing:-.8px}
-.hero{text-align:right;min-width:120px}
-.hero-value{font-family:'JetBrains Mono',monospace;font-size:40px;line-height:1;font-weight:700}
-.hero-label{font-size:11px;opacity:.9;margin-top:6px;text-transform:uppercase;letter-spacing:.8px}
-.summary{padding:16px 22px;background:#f8fafc;color:#111827;font-size:15px;line-height:1.45;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 22px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px 14px 12px}
-.card.dark{background:#f9fafb}
-.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#6b7280;font-weight:700;margin-bottom:8px}
-.metric{font-family:'JetBrains Mono',monospace;font-size:28px;line-height:1;font-weight:700;color:#4f46e5;margin-bottom:8px}
-.label{font-size:13px;color:#111827;font-weight:700;margin-bottom:4px}
-.detail{font-size:12px;color:#6b7280;line-height:1.4}
-.actions{padding:0 22px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.action{border-radius:16px;padding:14px 16px;background:rgba(0,0,0,.02);border:1px solid #e5e7eb}
-.action-title{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#4f46e5;font-weight:700;margin-bottom:8px}
-.action-body{font-size:13px;line-height:1.45;color:#374151;font-weight:500}
-@media (max-width:640px){.title-row{flex-direction:column;align-items:flex-start}.hero{text-align:left}.grid{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engagement Drives Results</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 32px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .header-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .header-insight {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+
+        .comparison-side {
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+        }
+
+        .comparison-side.low {
+            background: #fef2f2;
+        }
+
+        .comparison-side.high {
+            background: #ecfdf5;
+        }
+
+        .comparison-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .comparison-side.low .comparison-label {
+            color: #991b1b;
+        }
+
+        .comparison-side.high .comparison-label {
+            color: #065f46;
+        }
+
+        .comparison-value {
+            font-size: 80px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: -3px;
+        }
+
+        .comparison-side.low .comparison-value {
+            color: #dc2626;
+            text-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .comparison-side.high .comparison-value {
+            color: #059669;
+            text-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+        }
+
+        .comparison-desc {
+            font-size: 14px;
+            color: #71717a;
+            font-weight: 500;
+        }
+
+        .divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            font-size: 24px;
+            font-weight: 700;
+            color: #6366f1;
+            z-index: 10;
+        }
+
+        .insight-box {
+            padding: 32px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .insight-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #6366f1;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .insight-stat {
+            font-size: 64px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #6366f1;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+        }
+
+        .insight-text {
+            font-size: 16px;
+            color: #18181b;
+            font-weight: 600;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .action-item {
+            background: white;
+            border: 2px solid #6366f1;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-item:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        .action-item-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 6px;
+        }
+
+        .action-item-desc {
+            font-size: 13px;
+            color: #71717a;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 640px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .divider {
+                display: none;
+            }
+
+            .header {
+                padding: 24px;
+            }
+
+            .insight-box {
+                padding: 24px;
+            }
+        }
+    </style>
 </head>
-<body><div class="widget"><div class="header"><div class="eyebrow">Proven Impact</div><div class="title-row"><div><div class="title">Engagement = Better Execution</div></div><div class="hero"><div class="hero-value">+9 pts</div><div class="hero-label">Execution Lift</div></div></div></div><div class="summary">This is not theory. Stores that use WorkJam more actively complete more tasks on time and sustain better operational discipline.</div><div class="grid"><div class="card"><div class="kicker">Low Engagement</div><div class="metric">77%</div><div class="label">On-Time Completion</div><div class="detail">Stores with weak usage underperform operationally.</div></div><div class="card dark"><div class="kicker">High Engagement</div><div class="metric">86%</div><div class="label">On-Time Completion</div><div class="detail">Stores with strong usage execute better.</div></div><div class="card"><div class="kicker">Signal</div><div class="metric">Stronger</div><div class="label">Manager Participation</div><div class="detail">Communication and task adoption move together.</div></div></div><div class="actions"><div class="action"><div class="action-title">What leaders should do</div><div class="action-body">Drive manager communication habits, not just task assignments, to improve execution consistency.</div></div><div class="action"><div class="action-title">How to use this</div><div class="action-body">Position engagement as an operating lever tied to execution, not just a culture metric.</div></div></div></div></body></html>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-label">Proven Impact</div>
+            <div class="header-title">Engagement = Better Execution</div>
+            <div class="header-insight">Stores with high WorkJam engagement complete more tasks on time. This isn't theory—it's data from your network.</div>
+        </div>
+
+        <div class="comparison" style="position: relative;">
+            <div class="comparison-side low">
+                <div class="comparison-label">Low Engagement Stores</div>
+                <div class="comparison-value">90.8%</div>
+                <div class="comparison-desc">Task Completion Rate</div>
+            </div>
+
+            <div class="divider">→</div>
+
+            <div class="comparison-side high">
+                <div class="comparison-label">High Engagement Stores</div>
+                <div class="comparison-value">94.0%</div>
+                <div class="comparison-desc">Task Completion Rate</div>
+            </div>
+        </div>
+
+        <div class="insight-box">
+            <div class="insight-title">What This Means for You</div>
+            <div class="insight-stat">+3.2pts</div>
+            <div class="insight-text">High-engagement stores execute 3.2 percentage points better than low-engagement stores. That's the difference between missing your bonus and crushing your targets.</div>
+
+            <div class="action-item" onclick="viewAction()">
+                <div class="action-item-title">💡 Action: Boost Your Store's Engagement</div>
+                <div class="action-item-desc">React to posts, encourage your team to comment, acknowledge survey responses. Engagement isn't busywork—it's correlated with task execution.</div>
+            </div>
+
+            <div class="action-item" onclick="viewBenchmark()">
+                <div class="action-item-title">🎯 Benchmark: See Where You Stand</div>
+                <div class="action-item-desc">Check your store's engagement score vs district average. If you're below 50%, you're leaving execution on the table.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function viewAction() {
+            alert('Opening engagement playbook...\n\n✓ Daily team huddle: Review 2-3 top posts\n✓ Manager reacts to every team comment\n✓ Weekly shoutout for most engaged associate\n✓ Track engagement % in your weekly scorecard');
+        }
+
+        function viewBenchmark() {
+            alert('Opening your engagement dashboard...\n\nYour Store Engagement: 47%\nDistrict Average: 58%\nModel Stores: 72%+\n\nGap to close: 11pts');
+        }
+    </script>
+</body>
+</html>

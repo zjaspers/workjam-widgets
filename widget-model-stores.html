@@ -1,35 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn from Model Stores</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:transparent;padding:0;margin:0}
-.widget{width:100%;max-width:760px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px rgba(17,24,39,.06), 0 10px 28px rgba(17,24,39,.10)}
-.header{padding:20px 22px 18px;background:linear-gradient(135deg,#10b981 0%, #059669 100%);color:#fff}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:8px}
-.title-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
-.title{font-size:28px;line-height:1.05;font-weight:700;letter-spacing:-.8px}
-.hero{text-align:right;min-width:120px}
-.hero-value{font-family:'JetBrains Mono',monospace;font-size:40px;line-height:1;font-weight:700}
-.hero-label{font-size:11px;opacity:.9;margin-top:6px;text-transform:uppercase;letter-spacing:.8px}
-.summary{padding:16px 22px;background:#f8fafc;color:#111827;font-size:15px;line-height:1.45;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 22px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px 14px 12px}
-.card.dark{background:#f9fafb}
-.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#6b7280;font-weight:700;margin-bottom:8px}
-.metric{font-family:'JetBrains Mono',monospace;font-size:28px;line-height:1;font-weight:700;color:#059669;margin-bottom:8px}
-.label{font-size:13px;color:#111827;font-weight:700;margin-bottom:4px}
-.detail{font-size:12px;color:#6b7280;line-height:1.4}
-.actions{padding:0 22px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.action{border-radius:16px;padding:14px 16px;background:rgba(0,0,0,.02);border:1px solid #e5e7eb}
-.action-title{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#059669;font-weight:700;margin-bottom:8px}
-.action-body{font-size:13px;line-height:1.45;color:#374151;font-weight:500}
-@media (max-width:640px){.title-row{flex-direction:column;align-items:flex-start}.hero{text-align:left}.grid{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn from Model Stores</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 32px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .header-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .header-insight {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .store-grid {
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .store-card {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 24px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .store-card:hover {
+            border-color: #10b981;
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.2);
+        }
+
+        .store-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .store-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #18181b;
+        }
+
+        .store-badge {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .store-score {
+            font-size: 60px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #10b981;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: #71717a;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid #e5e7eb;
+            font-size: 13px;
+        }
+
+        .metric-name {
+            color: #71717a;
+            font-weight: 500;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: #18181b;
+        }
+
+        .playbook-section {
+            padding: 0 32px 32px;
+        }
+
+        .playbook-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #10b981;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 16px;
+        }
+
+        .playbook-item {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playbook-item:hover {
+            border-color: #10b981;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.15);
+        }
+
+        .playbook-item-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 8px;
+        }
+
+        .playbook-item-desc {
+            font-size: 14px;
+            color: #71717a;
+            line-height: 1.6;
+        }
+
+        .gap-callout {
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+
+        .gap-stat {
+            font-size: 56px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #10b981;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+        }
+
+        .gap-text {
+            font-size: 15px;
+            color: #18181b;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 640px) {
+            .header, .store-grid, .playbook-section {
+                padding: 24px;
+            }
+
+            .store-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-<body><div class="widget"><div class="header"><div class="eyebrow">Proven Success</div><div class="title-row"><div><div class="title">Learn from Model Stores</div></div><div class="hero"><div class="hero-value">488</div><div class="hero-label">Top Performing Stores</div></div></div></div><div class="summary">The best stores are already showing the behavior you want. The job is to turn their habits into a repeatable field playbook.</div><div class="grid"><div class="card"><div class="kicker">League City</div><div class="metric">94.0%</div><div class="label">Task Completion</div><div class="detail">High engagement and strong on-time execution.</div></div><div class="card dark"><div class="kicker">Concord</div><div class="metric">93.8%</div><div class="label">Task Completion</div><div class="detail">Strong back-of-house discipline.</div></div><div class="card"><div class="kicker">Charlotte</div><div class="metric">93.5%</div><div class="label">Task Completion</div><div class="detail">Excellent visual merch and survey compliance.</div></div></div><div class="actions"><div class="action"><div class="action-title">Pattern to copy</div><div class="action-body">Managers review priorities early, reinforce standards during shift, and communicate visibly in-channel.</div></div><div class="action"><div class="action-title">Operator takeaway</div><div class="action-body">Use model stores as peer examples for coaching instead of only escalating poor performers.</div></div></div></div></body></html>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-label">Proven Success</div>
+            <div class="header-title">Learn from Model Stores</div>
+            <div class="header-insight">488 stores are crushing it. Here's what they're doing differently—and how you can replicate their success.</div>
+        </div>
+
+        <div class="store-grid">
+            <div class="store-card" onclick="viewPlaybook('league-city')">
+                <div class="store-header">
+                    <div class="store-name">League City, TX</div>
+                    <div class="store-badge">Top 5%</div>
+                </div>
+                <div class="store-score">94.0%</div>
+                <div class="score-label">Task Completion</div>
+                <div class="metric-row">
+                    <div class="metric-name">On-Time Rate</div>
+                    <div class="metric-value">88.4%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Team Engagement</div>
+                    <div class="metric-value">High</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Store Type</div>
+                    <div class="metric-value">Similar to yours</div>
+                </div>
+            </div>
+
+            <div class="store-card" onclick="viewPlaybook('concord')">
+                <div class="store-header">
+                    <div class="store-name">Concord, NC</div>
+                    <div class="store-badge">Top 5%</div>
+                </div>
+                <div class="store-score">93.8%</div>
+                <div class="score-label">Task Completion</div>
+                <div class="metric-row">
+                    <div class="metric-name">On-Time Rate</div>
+                    <div class="metric-value">87.9%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Inventory Control</div>
+                    <div class="metric-value">93%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Key Strength</div>
+                    <div class="metric-value">Back-of-house</div>
+                </div>
+            </div>
+
+            <div class="store-card" onclick="viewPlaybook('charlotte')">
+                <div class="store-header">
+                    <div class="store-name">Charlotte, NC</div>
+                    <div class="store-badge">Top 5%</div>
+                </div>
+                <div class="store-score">93.5%</div>
+                <div class="score-label">Task Completion</div>
+                <div class="metric-row">
+                    <div class="metric-name">Visual Merch</div>
+                    <div class="metric-value">100%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Survey Compliance</div>
+                    <div class="metric-value">96%</div>
+                </div>
+                <div class="metric-row">
+                    <div class="metric-name">Team Size</div>
+                    <div class="metric-value">Similar to yours</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="playbook-section">
+            <div class="gap-callout">
+                <div class="gap-stat">+5.7pts</div>
+                <div class="gap-text">These stores execute 5.7 percentage points better than your current performance. That difference is the gap between missing your bonus and earning it.</div>
+            </div>
+
+            <div class="playbook-title">What Model Stores Do Differently</div>
+
+            <div class="playbook-item" onclick="viewDetail('morning-routine')">
+                <div class="playbook-item-title">🌅 Morning Task Review (Before Store Opens)</div>
+                <div class="playbook-item-desc">League City TX: Manager reviews task list at 8:45am every day. Assigns owners, sets 2-hour completion windows, flags blockers. Takes 10 minutes. Results in 88%+ on-time completion.</div>
+            </div>
+
+            <div class="playbook-item" onclick="viewDetail('rotation')">
+                <div class="playbook-item-title">🔄 Weekly Back-of-House Owner Rotation</div>
+                <div class="playbook-item-desc">Concord NC: Rotates inventory control ownership weekly. Builds skills across the team, prevents burnout, maintains 93% completion rate on inventory tasks.</div>
+            </div>
+
+            <div class="playbook-item" onclick="viewDetail('huddle')">
+                <div class="playbook-item-title">📣 Daily Huddle Task Accountability</div>
+                <div class="playbook-item-desc">Charlotte NC: 5-minute team huddle at 10am. Reviews yesterday's completion %, calls out wins, assigns today's priorities. Team knows what's expected before floor opens.</div>
+            </div>
+
+            <div class="playbook-item" onclick="viewDetail('engagement')">
+                <div class="playbook-item-title">💬 Manager Engagement Sets the Tone</div>
+                <div class="playbook-item-desc">All three stores: Manager reacts to every team post within 2 hours, comments weekly, shares team wins publicly. High engagement = high execution (proven 3.2pt lift).</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function viewPlaybook(store) {
+            const stores = {
+                'league-city': 'Opening League City TX playbook...\n\n✓ 8:45am task review (daily)\n✓ 2-hour completion windows\n✓ Manager assigns + tracks\n✓ Team huddle at 10am\n✓ High engagement (manager active on posts)',
+                'concord': 'Opening Concord NC playbook...\n\n✓ Weekly inventory owner rotation\n✓ Protected back-of-house time blocks\n✓ Visual merch + inventory parity\n✓ Manager checks in at 2pm daily\n✓ 93% inventory control rate',
+                'charlotte': 'Opening Charlotte NC playbook...\n\n✓ 100% visual merch execution\n✓ Daily 5-min huddle at 10am\n✓ Public recognition for wins\n✓ 96% survey compliance\n✓ Team accountability culture'
+            };
+            alert(stores[store]);
+        }
+
+        function viewDetail(practice) {
+            const details = {
+                'morning-routine': 'Morning Task Review Implementation:\n\n1. Set recurring 8:45am alarm\n2. Pull up WorkJam task list\n3. Assign owner to each task\n4. Set completion deadline (2-hour window)\n5. Flag any blockers to address\n\nTakes 10 minutes. Results in 88%+ on-time.',
+                'rotation': 'Weekly Rotation Strategy:\n\nMonday: Team member A owns inventory\nTuesday-Wednesday: Team member B\nThursday-Friday: Team member C\n\nBuilds skills, prevents burnout, maintains quality.',
+                'huddle': 'Daily Huddle Format (5 minutes):\n\n1. Yesterday completion % (30 sec)\n2. Call out 2 wins (1 min)\n3. Today\'s 3 priorities (2 min)\n4. Any blockers? (1.5 min)\n\nTeam aligned before floor opens.',
+                'engagement': 'Manager Engagement Checklist:\n\n□ React to all team posts within 2 hours\n□ Comment on posts weekly\n□ Share wins publicly\n□ Acknowledge survey responses\n\nHigh engagement = +3.2pts execution lift.'
+            };
+            alert(details[practice]);
+        }
+    </script>
+</body>
+</html>

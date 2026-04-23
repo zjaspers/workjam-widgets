@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>At-Risk Work - Your Store</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+        }
+        
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .header {
+            padding: 24px 20px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .alert-banner {
+            padding: 16px 20px;
+            background: #fee2e2;
+            border-bottom: 3px solid #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .alert-icon {
+            font-size: 24px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .alert-text {
+            font-size: 13px;
+            color: #991b1b;
+            font-weight: 700;
+        }
+
+        .stats-section {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            background: #fef2f2;
+        }
+
+        .stat-card {
+            background: white;
+            border: 2px solid #dc2626;
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #dc2626;
+            line-height: 1;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: #991b1b;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tasks-section {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .task-card {
+            background: #fef2f2;
+            border: 2px solid #fca5a5;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+        }
+
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .task-priority {
+            font-size: 10px;
+            font-weight: 800;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .task-due {
+            font-size: 11px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #991b1b;
+            background: #fee2e2;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .task-title {
+            font-size: 15px;
+            font-weight: 800;
+            color: #18181b;
+            margin-bottom: 6px;
+        }
+
+        .task-description {
+            font-size: 13px;
+            color: #71717a;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .task-impact {
+            font-size: 12px;
+            color: #dc2626;
+            font-weight: 700;
+        }
+
+        .action-button {
+            display: block;
+            width: calc(100% - 40px);
+            margin: 20px 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            color: white;
+            text-align: center;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 800;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 16px;
+            }
+
+            .stats-section {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+
+            .tasks-section {
+                padding: 16px;
+            }
+
+            .stat-value {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-title">⚠️ At-Risk Work</div>
+            <div class="header-subtitle">Store #<span id="store-number">1247</span> - Critical Items</div>
+        </div>
+
+        <div class="alert-banner">
+            <div class="alert-icon">🔥</div>
+            <div class="alert-text">You have 7 overdue or at-risk tasks that need immediate attention</div>
+        </div>
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-value">4</div>
+                <div class="stat-label">Overdue</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Due Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2</div>
+                <div class="stat-label">Failed Audits</div>
+            </div>
+        </div>
+
+        <div class="tasks-section">
+            <div class="section-title">🎯 Critical Tasks - Action Required</div>
+
+            <div class="task-card" onclick="openTask('fuel-system')">
+                <div class="task-header">
+                    <div class="task-priority">🔴 Critical • Overdue</div>
+                    <div class="task-due">Due 2 days ago</div>
+                </div>
+                <div class="task-title">Fuel System Leak Check</div>
+                <div class="task-description">Monthly underground storage tank inspection and leak detection system test required by EPA regulations.</div>
+                <div class="task-impact">⚠️ Impact: Compliance violation risk - potential $10K+ fine</div>
+            </div>
+
+            <div class="task-card" onclick="openTask('food-safety')">
+                <div class="task-header">
+                    <div class="task-priority">🔴 Critical • Overdue</div>
+                    <div class="task-due">Due yesterday</div>
+                </div>
+                <div class="task-title">Food Safety Temperature Logs</div>
+                <div class="task-description">Daily hot food holding temps (wings, pizza) not logged for past 2 days. Required for health inspection.</div>
+                <div class="task-impact">⚠️ Impact: Health code violation - could shut down hot food program</div>
+            </div>
+
+            <div class="task-card" onclick="openTask('age-verification')">
+                <div class="task-header">
+                    <div class="task-priority">🔴 Critical • Due Today</div>
+                    <div class="task-due">Due by 5pm</div>
+                </div>
+                <div class="task-title">Age Verification Training Renewal</div>
+                <div class="task-description">3 team members need tobacco/alcohol age verification training recertification before end of shift.</div>
+                <div class="task-impact">⚠️ Impact: Cannot sell restricted items without certified staff on duty</div>
+            </div>
+
+            <div class="task-card" onclick="openTask('inventory-audit')">
+                <div class="task-header">
+                    <div class="task-priority">🟠 High • Overdue</div>
+                    <div class="task-due">Due yesterday</div>
+                </div>
+                <div class="task-title">Weekly Inventory Count - Tobacco</div>
+                <div class="task-description">High-value tobacco inventory variance from last week (2.3%) requires immediate count and reconciliation.</div>
+                <div class="task-impact">💰 Impact: $1,800+ shrink if not addressed</div>
+            </div>
+
+            <div class="task-card" onclick="openTask('pump-calibration')">
+                <div class="task-header">
+                    <div class="task-priority">🟠 High • Due Today</div>
+                    <div class="task-due">Due by 6pm</div>
+                </div>
+                <div class="task-title">Fuel Pump Calibration Check</div>
+                <div class="task-description">Quarterly accuracy test for all fuel dispensers. Pumps 3 and 7 flagged in last test.</div>
+                <div class="task-impact">⚠️ Impact: State compliance + customer trust</div>
+            </div>
+        </div>
+
+        <a href="https://app-next.workjamdemo.com/audits" class="action-button">
+            Complete Tasks in WorkJam →
+        </a>
+    </div>
+
+    <script>
+        // Get WorkJam URL variables
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationId = urlParams.get('locationId') || urlParams.get('externalLocationId') || '1247';
+        
+        // Update UI
+        document.getElementById('store-number').textContent = locationId;
+
+        function openTask(taskId) {
+            // In production, this would deep-link to specific task in WorkJam
+            window.location.href = 'https://app-next.workjamdemo.com/audits';
+        }
+
+        console.log('At-Risk Work Widget loaded for store:', locationId);
+    </script>
+</body>
+</html>

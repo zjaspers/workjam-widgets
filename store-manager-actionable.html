@@ -1,35 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Store Performance</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:transparent;padding:0;margin:0}
-.widget{width:100%;max-width:760px;margin:0 auto;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px rgba(17,24,39,.06), 0 10px 28px rgba(17,24,39,.10)}
-.header{padding:20px 22px 18px;background:linear-gradient(135deg,#18181b 0%, #27272a 100%);color:#fff}
-.eyebrow{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;margin-bottom:8px}
-.title-row{display:flex;justify-content:space-between;gap:16px;align-items:flex-end}
-.title{font-size:28px;line-height:1.05;font-weight:700;letter-spacing:-.8px}
-.hero{text-align:right;min-width:120px}
-.hero-value{font-family:'JetBrains Mono',monospace;font-size:40px;line-height:1;font-weight:700}
-.hero-label{font-size:11px;opacity:.9;margin-top:6px;text-transform:uppercase;letter-spacing:.8px}
-.summary{padding:16px 22px;background:#f8fafc;color:#111827;font-size:15px;line-height:1.45;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px 22px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:14px 14px 12px}
-.card.dark{background:#f9fafb}
-.kicker{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#6b7280;font-weight:700;margin-bottom:8px}
-.metric{font-family:'JetBrains Mono',monospace;font-size:28px;line-height:1;font-weight:700;color:#dc2626;margin-bottom:8px}
-.label{font-size:13px;color:#111827;font-weight:700;margin-bottom:4px}
-.detail{font-size:12px;color:#6b7280;line-height:1.4}
-.actions{padding:0 22px 18px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.action{border-radius:16px;padding:14px 16px;background:rgba(0,0,0,.02);border:1px solid #e5e7eb}
-.action-title{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:#dc2626;font-weight:700;margin-bottom:8px}
-.action-body{font-size:13px;line-height:1.45;color:#374151;font-weight:500}
-@media (max-width:640px){.title-row{flex-direction:column;align-items:flex-start}.hero{text-align:left}.grid{grid-template-columns:1fr 1fr}.actions{grid-template-columns:1fr}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Store Performance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: #fafafa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dashboard-widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: #ffffff;
+            border-radius: 24px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .widget-header {
+            padding: 32px;
+            background: linear-gradient(135deg, #18181b 0%, #27272a 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .widget-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.4;
+        }
+
+        .store-name {
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .widget-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+        }
+
+        .status-banner {
+            background: #fffbeb;
+            border-left: 3px solid #f59e0b;
+            padding: 20px 32px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-icon {
+            font-size: 20px;
+        }
+
+        .status-text {
+            font-size: 14px;
+            color: #78350f;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .metrics-section {
+            padding: 32px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #71717a;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 24px;
+            padding: 20px 0;
+            border-bottom: 1px solid #f4f4f5;
+            align-items: center;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .metric-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #18181b;
+            letter-spacing: -0.2px;
+        }
+
+        .your-score {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 10px;
+            color: #a1a1aa;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .score-value {
+            font-size: 40px;
+            font-weight: 800;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: -2px;
+        }
+
+        .score-value.good {
+            color: #16a34a;
+            text-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
+        }
+
+        .score-value.warning {
+            color: #ea580c;
+            text-shadow: 0 2px 6px rgba(234, 88, 12, 0.2);
+        }
+
+        .score-value.critical {
+            color: #dc2626;
+            text-shadow: 0 2px 6px rgba(220, 38, 38, 0.2);
+        }
+
+        .network-avg {
+            text-align: center;
+        }
+
+        .diff-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            margin-top: 4px;
+        }
+
+        .diff-badge.positive {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .diff-badge.negative {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-section {
+            padding: 0 32px 32px;
+        }
+
+        .action-card {
+            background: #ffffff;
+            border: 2px solid #fecaca;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, transparent 100%);
+            border-radius: 14px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .action-card:hover {
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.15);
+        }
+
+        .action-card:hover::before {
+            opacity: 1;
+        }
+
+        .action-priority {
+            font-size: 10px;
+            font-weight: 700;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .action-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #18181b;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+            position: relative;
+        }
+
+        .action-detail {
+            font-size: 14px;
+            color: #71717a;
+            line-height: 1.6;
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        .action-impact {
+            font-size: 13px;
+            color: #16a34a;
+            font-weight: 700;
+            position: relative;
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-widget {
+                margin: 0;
+                border-radius: 0;
+            }
+
+            .widget-header {
+                padding: 24px;
+            }
+
+            .metrics-section, .action-section {
+                padding: 24px;
+            }
+
+            .comparison-row {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 16px 0;
+            }
+
+            .your-score, .network-avg {
+                text-align: left;
+            }
+        }
+    </style>
 </head>
-<body><div class="widget"><div class="header"><div class="eyebrow">Store #452 · Magnificent Mile</div><div class="title-row"><div><div class="title">Performance Snapshot</div></div><div class="hero"><div class="hero-value">88.3%</div><div class="hero-label">Task Completion</div></div></div></div><div class="summary">Coaching opportunity: engagement is healthy, but execution is trailing the network and needs immediate manager action.</div><div class="grid"><div class="card"><div class="kicker">Network Comparison</div><div class="metric">-4.4%</div><div class="label">Vs Network Avg</div><div class="detail">Store 88.3% vs network 92.7%.</div></div><div class="card dark"><div class="kicker">Most Urgent</div><div class="metric">7</div><div class="label">Overdue Tasks</div><div class="detail">Due today and ready for follow-up.</div></div><div class="card"><div class="kicker">Unlock</div><div class="metric">$2.4K</div><div class="label">Bonus At Risk</div><div class="detail">Close the 5-point gap to unlock.</div></div></div><div class="actions"><div class="action"><div class="action-title">Today</div><div class="action-body">Review overdue task list with the opening lead and assign owners before midday.</div></div><div class="action"><div class="action-title">This week</div><div class="action-body">Coach on back-of-house routines and ask for photo proof on the highest-risk tasks.</div></div></div></div></body></html>
+<body>
+    <div class="dashboard-widget">
+        <div class="widget-header">
+            <div class="store-name">Store #452 - Magnificent Mile</div>
+            <div class="widget-title">Performance Snapshot</div>
+        </div>
+
+        <div class="status-banner">
+            <div class="status-icon">⚠️</div>
+            <div class="status-text">Coaching Opportunity — High engagement but execution needs improvement</div>
+        </div>
+
+        <div class="metrics-section">
+            <div class="section-title">Your Store vs Network</div>
+
+            <div class="comparison-row">
+                <div class="metric-name">Task Completion Rate</div>
+                <div class="your-score">
+                    <div class="score-label">Your Store</div>
+                    <div class="score-value warning">88.3%</div>
+                </div>
+                <div class="network-avg">
+                    <div class="score-label">Network Avg</div>
+                    <div class="score-value good">92.7%</div>
+                    <div class="diff-badge negative">-4.4%</div>
+                </div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="metric-name">On-Time Completion</div>
+                <div class="your-score">
+                    <div class="score-label">Your Store</div>
+                    <div class="score-value critical">79.1%</div>
+                </div>
+                <div class="network-avg">
+                    <div class="score-label">Network Avg</div>
+                    <div class="score-value good">85.4%</div>
+                    <div class="diff-badge negative">-6.3%</div>
+                </div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="metric-name">Inventory Control Tasks</div>
+                <div class="your-score">
+                    <div class="score-label">Your Store</div>
+                    <div class="score-value critical">76%</div>
+                </div>
+                <div class="network-avg">
+                    <div class="score-label">Network Avg</div>
+                    <div class="score-value warning">83.8%</div>
+                    <div class="diff-badge negative">-7.8%</div>
+                </div>
+            </div>
+
+            <div class="comparison-row">
+                <div class="metric-name">Visual Merch Tasks</div>
+                <div class="your-score">
+                    <div class="score-label">Your Store</div>
+                    <div class="score-value good">98%</div>
+                </div>
+                <div class="network-avg">
+                    <div class="score-label">Network Avg</div>
+                    <div class="score-value good">99.7%</div>
+                    <div class="diff-badge negative">-1.7%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-section">
+            <div class="section-title">Priority Actions This Week</div>
+
+            <div class="action-card" onclick="viewAction('inventory')">
+                <div class="action-priority">Priority #1 • Closes 7.8pt gap</div>
+                <div class="action-title">Fix Back-of-House Task Workflow</div>
+                <div class="action-detail">Your inventory control tasks are 7.8pts below network. Visual merch is strong (98%) — replicate that workflow.</div>
+                <div class="action-impact">💰 Impact: Could recover ~$18K in shrink annually</div>
+            </div>
+
+            <div class="action-card" onclick="viewAction('ontime')">
+                <div class="action-priority">Priority #2 • 6.3pt improvement needed</div>
+                <div class="action-title">Improve On-Time Task Completion</div>
+                <div class="action-detail">14 tasks completed late this week. Schedule check-in at 2pm daily to catch overdue tasks.</div>
+                <div class="action-impact">📈 Impact: Model stores with 88%+ on-time rate execute 3.2pts better overall</div>
+            </div>
+
+            <div class="action-card" onclick="viewAction('learn')">
+                <div class="action-priority">Best Practice</div>
+                <div class="action-title">Learn from League City TX (Model Store)</div>
+                <div class="action-detail">They achieve 94% completion with similar team size. Review their workflow in the Model Store playbook.</div>
+                <div class="action-impact">🏆 Benchmark: +5.7pts better than your current performance</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function viewAction(actionId) {
+            const actions = {
+                'inventory': 'Opening inventory task workflow guide...\n\nYou would see:\n- Step-by-step playbook\n- Video from high-performing store\n- Checklist to implement this week',
+                'ontime': 'Opening on-time completion improvement plan...\n\nYou would see:\n- Daily check-in schedule template\n- Task prioritization framework\n- Team accountability tracker',
+                'learn': 'Opening Model Store playbook for League City TX...\n\nYou would see:\n- Their daily routine breakdown\n- Team delegation strategy\n- Manager interview + tips'
+            };
+
+            alert(actions[actionId]);
+        }
+    </script>
+</body>
+</html>

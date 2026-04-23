@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Shop Score - C-Store</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+            overflow-x: hidden;
+        }
+        
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+        }
+
+        .header {
+            padding: 16px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 3px;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .score-section {
+            padding: 24px 16px;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #92400e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .score-value {
+            font-size: 72px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #d97706;
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -3px;
+            text-shadow: 0 2px 8px rgba(217, 119, 6, 0.3);
+        }
+
+        .score-total {
+            font-size: 14px;
+            color: #92400e;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .score-badge {
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 8px;
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .score-badge.warning {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .categories-section {
+            padding: 16px;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 14px;
+            background: #f9fafb;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.2s;
+        }
+
+        .category-item:hover {
+            border-color: #f59e0b;
+            transform: translateX(2px);
+        }
+
+        .category-item.pass {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .category-item.fail {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-icon {
+            font-size: 20px;
+        }
+
+        .category-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #18181b;
+        }
+
+        .category-score {
+            font-size: 20px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .pass .category-score {
+            color: #059669;
+        }
+
+        .fail .category-score {
+            color: #dc2626;
+        }
+
+        .failures-section {
+            padding: 16px;
+            background: #fef2f2;
+            border-top: 3px solid #dc2626;
+        }
+
+        .failure-card {
+            background: white;
+            border-left: 4px solid #dc2626;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+
+        .failure-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #dc2626;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .failure-text {
+            font-size: 12px;
+            color: #991b1b;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .action-items {
+            padding: 16px;
+            background: white;
+        }
+
+        .action-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border: 2px solid #3b82f6;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+
+        .action-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #1e40af;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .action-text {
+            font-size: 12px;
+            color: #1e3a8a;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .visit-info {
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 11px;
+            color: #71717a;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 14px 12px;
+            }
+
+            .score-section {
+                padding: 20px 12px;
+            }
+
+            .score-value {
+                font-size: 64px;
+            }
+
+            .categories-section,
+            .failures-section,
+            .action-items {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-title">🕵️ Mystery Shop Score</div>
+            <div class="header-subtitle">Store #<span id="store-number">30110</span> - Latest Visit</div>
+        </div>
+
+        <div class="score-section">
+            <div class="score-label">Overall Score</div>
+            <div class="score-value">87</div>
+            <div class="score-total">out of 100 points</div>
+            <div class="score-badge">↗ +4 vs last visit</div>
+        </div>
+
+        <div class="categories-section">
+            <div class="section-title">📋 Category Scores</div>
+            
+            <div class="category-item pass">
+                <div class="category-info">
+                    <div class="category-icon">✅</div>
+                    <div class="category-name">Customer Service</div>
+                </div>
+                <div class="category-score">18/20</div>
+            </div>
+
+            <div class="category-item pass">
+                <div class="category-info">
+                    <div class="category-icon">✅</div>
+                    <div class="category-name">Store Cleanliness</div>
+                </div>
+                <div class="category-score">17/20</div>
+            </div>
+
+            <div class="category-item pass">
+                <div class="category-info">
+                    <div class="category-icon">✅</div>
+                    <div class="category-name">Product Availability</div>
+                </div>
+                <div class="category-score">16/20</div>
+            </div>
+
+            <div class="category-item pass">
+                <div class="category-info">
+                    <div class="category-icon">✅</div>
+                    <div class="category-name">Food Safety / Hot Food</div>
+                </div>
+                <div class="category-score">19/20</div>
+            </div>
+
+            <div class="category-item fail">
+                <div class="category-info">
+                    <div class="category-icon">❌</div>
+                    <div class="category-name">Fuel Pump Area</div>
+                </div>
+                <div class="category-score">11/20</div>
+            </div>
+
+            <div class="category-item">
+                <div class="category-info">
+                    <div class="category-icon">⚠️</div>
+                    <div class="category-name">Signage & Displays</div>
+                </div>
+                <div class="category-score">6/10</div>
+            </div>
+        </div>
+
+        <div class="failures-section">
+            <div class="section-title">🚨 Items Failed</div>
+            
+            <div class="failure-card">
+                <div class="failure-title">Fuel Pump - Windshield Cleaner</div>
+                <div class="failure-text">Pumps 3, 5, and 7 had empty squeegee buckets. Water/solution not refilled.</div>
+            </div>
+
+            <div class="failure-card">
+                <div class="failure-title">Fuel Pump - Paper Towels</div>
+                <div class="failure-text">Pump 5 dispenser was empty. Pump 3 had torn/damaged paper towels.</div>
+            </div>
+
+            <div class="failure-card">
+                <div class="failure-title">Promotional Signage</div>
+                <div class="failure-text">April Wings promotion signage not displayed at entrance. Outdated March promo still visible.</div>
+            </div>
+        </div>
+
+        <div class="action-items">
+            <div class="section-title">✅ Priority Actions</div>
+            
+            <div class="action-card">
+                <div class="action-title">Immediate (Today)</div>
+                <div class="action-text">Refill all fuel pump squeegee buckets and paper towel dispensers. Remove outdated March signage.</div>
+            </div>
+
+            <div class="action-card">
+                <div class="action-title">This Week</div>
+                <div class="action-text">Install April Wings promotional signage at entrance and pump toppers. Add fuel pump maintenance to daily opening checklist.</div>
+            </div>
+
+            <div class="action-card">
+                <div class="action-title">Ongoing</div>
+                <div class="action-text">Maintain current high standards in customer service (18/20) and food safety (19/20). Continue team recognition for these areas.</div>
+            </div>
+        </div>
+
+        <div class="visit-info">
+            Last Visit: April 18, 2026 • Shopper ID: MS-2847 • Next Scheduled: May 15, 2026
+        </div>
+    </div>
+
+    <script>
+        // Get WorkJam URL variables
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationId = urlParams.get('locationId') || urlParams.get('externalLocationId') || '30110';
+        
+        // Update UI
+        document.getElementById('store-number').textContent = locationId;
+
+        console.log('Mystery Shop Widget loaded for store:', locationId);
+    </script>
+</body>
+</html>

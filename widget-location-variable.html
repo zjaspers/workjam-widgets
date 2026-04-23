@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+        }
+
+        .location-widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .widget-header {
+            padding: 24px;
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .header-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .location-id-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin-top: 8px;
+        }
+
+        .content-section {
+            padding: 24px;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid #3b82f6;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #1e40af;
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 8px rgba(30, 64, 175, 0.2);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #1e40af;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .info-box {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #71717a;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #18181b;
+        }
+
+        .debug-section {
+            background: #fffbeb;
+            border: 2px solid #fbbf24;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .debug-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #92400e;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 12px;
+        }
+
+        .debug-item {
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #78350f;
+            padding: 6px 0;
+        }
+
+        .debug-key {
+            font-weight: 700;
+            color: #92400e;
+        }
+
+        @media (max-width: 480px) {
+            .widget-header {
+                padding: 20px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .stat-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="location-widget">
+        <div class="widget-header">
+            <div class="header-label">Location Dashboard</div>
+            <div class="header-title" id="locationName">Loading...</div>
+            <div class="location-id-badge">
+                ID: <span id="locationIdDisplay">--</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="taskCompletion">92</div>
+                    <div class="stat-label">Task Health</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value" id="storeScore">88</div>
+                    <div class="stat-label">Store Score</div>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-row">
+                    <div class="info-label">Location ID</div>
+                    <div class="info-value" id="locationIdValue">--</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Location Code</div>
+                    <div class="info-value" id="locationCodeValue">--</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Region</div>
+                    <div class="info-value" id="regionValue">--</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Employee ID</div>
+                    <div class="info-value" id="employeeIdValue">--</div>
+                </div>
+            </div>
+
+            <div class="debug-section">
+                <div class="debug-title">🔍 URL Parameters Detected</div>
+                <div id="debugOutput">
+                    <div class="debug-item">Loading parameters...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters (from WorkJam variables)
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Extract all possible WorkJam variables
+        const locationId = urlParams.get('locationId') || urlParams.get('externalLocationId') || '711/QLD/QLD002/A534/9999';
+        const locationCode = urlParams.get('locationCode') || urlParams.get('externalLocationCode') || 'QLD002';
+        const regionId = urlParams.get('regionId') || urlParams.get('externalRegionId') || 'QLD';
+        const employeeId = urlParams.get('employeeId') || 'EMP-12345';
+        const city = urlParams.get('city') || 'Brisbane';
+        const zipCode = urlParams.get('zipCode') || '4000';
+
+        // Simulate location data lookup
+        const locationData = {
+            '711/QLD/QLD002/A534/9999': {
+                name: '7-Eleven Brisbane QLD002',
+                taskCompletion: 96,
+                storeScore: 91
+            },
+            '30110': {
+                name: 'Melbourne CBD Store',
+                taskCompletion: 94,
+                storeScore: 89
+            },
+            'default': {
+                name: `Location ${locationId}`,
+                taskCompletion: 92,
+                storeScore: 88
+            }
+        };
+
+        // Get location-specific data or use default
+        const currentLocation = locationData[locationId] || locationData['default'];
+
+        // Update UI with location data
+        document.getElementById('locationName').textContent = currentLocation.name;
+        document.getElementById('locationIdDisplay').textContent = locationId;
+        document.getElementById('taskCompletion').textContent = currentLocation.taskCompletion;
+        document.getElementById('storeScore').textContent = currentLocation.storeScore;
+
+        // Update info box
+        document.getElementById('locationIdValue').textContent = locationId;
+        document.getElementById('locationCodeValue').textContent = locationCode;
+        document.getElementById('regionValue').textContent = regionId;
+        document.getElementById('employeeIdValue').textContent = employeeId;
+
+        // Debug output - show all URL parameters
+        const debugOutput = document.getElementById('debugOutput');
+        let debugHTML = '';
+        
+        if (urlParams.toString()) {
+            urlParams.forEach((value, key) => {
+                debugHTML += `<div class="debug-item"><span class="debug-key">${key}:</span> ${value}</div>`;
+            });
+        } else {
+            debugHTML = `
+                <div class="debug-item"><span class="debug-key">locationId:</span> ${locationId} (default)</div>
+                <div class="debug-item"><span class="debug-key">locationCode:</span> ${locationCode} (default)</div>
+                <div class="debug-item"><span class="debug-key">regionId:</span> ${regionId} (default)</div>
+                <div class="debug-item"><span class="debug-key">employeeId:</span> ${employeeId} (default)</div>
+                <div class="debug-item" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #fbbf24;">
+                    ℹ️ <strong>Note:</strong> No URL parameters detected. Using defaults for testing.
+                </div>
+            `;
+        }
+        
+        debugOutput.innerHTML = debugHTML;
+
+        // Log to console for debugging
+        console.log('Widget loaded with parameters:', {
+            locationId,
+            locationCode,
+            regionId,
+            employeeId,
+            city,
+            zipCode
+        });
+    </script>
+</body>
+</html>

@@ -1,192 +1,208 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Health Score</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
 
-```
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'DM Sans', sans-serif;
-        background: #fafafa;
-        padding: 0;
-        margin: 0;
-    }
-
-    .score-widget {
-        min-width: 220px;
-        max-width: 900px;
-        margin: 16px auto;
-        background: white;
-        border-radius: 24px;
-        box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
-        overflow: hidden;
-    }
-
-    .scores-container {
-        padding: 32px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-
-    .score-card {
-        background: #f9fafb;
-        border-radius: 16px;
-        padding: 24px;
-        text-align: center;
-        border: 2px solid transparent;
-        transition: all 0.3s ease;
-    }
-
-    .score-card:hover {
-        border-color: #059669;
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(5, 150, 105, 0.15);
-    }
-
-    .score-label {
-        font-size: 11px;
-        font-weight: 700;
-        color: #71717a;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 12px;
-    }
-
-    .score-value {
-        font-size: 56px;
-        font-weight: 700;
-        font-family: 'JetBrains Mono', monospace;
-        line-height: 1;
-        margin-bottom: 8px;
-        letter-spacing: -2px;
-    }
-
-    .score-icon {
-        font-size: 32px;
-        margin-bottom: 12px;
-    }
-
-    .task-health .score-value {
-        color: #059669;
-    }
-
-    .store-score .score-value {
-        color: #f59e0b;
-    }
-
-    .score-subtitle {
-        font-size: 13px;
-        color: #71717a;
-        font-weight: 500;
-    }
-
-    .score-percentage {
-        font-size: 13px;
-        font-weight: 700;
-        margin-top: 6px;
-    }
-
-    .positive {
-        color: #059669;
-    }
-
-    .details-section {
-        padding: 0 32px 32px;
-    }
-
-    .detail-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 16px 0;
-        border-bottom: 1px solid #f4f4f5;
-    }
-
-    .detail-row:last-child {
-        border-bottom: none;
-    }
-
-    .detail-label {
-        font-size: 14px;
-        font-weight: 600;
-        color: #18181b;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-
-    .detail-value {
-        font-size: 18px;
-        font-weight: 700;
-        font-family: 'JetBrains Mono', monospace;
-        color: #18181b;
-    }
-
-    .status-indicator {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-    }
-
-    .status-good {
-        background: #059669;
-    }
-
-    .status-warning {
-        background: #f59e0b;
-    }
-
-    .refresh-info {
-        padding: 16px 32px;
-        background: #f9fafb;
-        border-top: 1px solid #e5e7eb;
-        text-align: center;
-        font-size: 12px;
-        color: #71717a;
-    }
-
-    @media (max-width: 480px) {
-        body {
+        * {
+            margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
         }
 
         .score-widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
             margin: 0;
-            border-radius: 0;
+            background: transparent;
+            overflow: hidden;
         }
 
         .scores-container {
-            grid-template-columns: 1fr;
-            padding: 24px;
-            gap: 16px;
+            padding: 24px 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
-        
+
         .score-card {
-            padding: 24px;
+            background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+            border-radius: 20px;
+            padding: 28px 20px;
+            text-align: center;
+            border: 3px solid;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .task-health {
+            border-color: #059669;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .store-score {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .score-card:active {
+            transform: scale(0.98);
+        }
+
+        .score-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 16px;
+        }
+
+        .task-health .score-label {
+            color: #065f46;
+        }
+
+        .store-score .score-label {
+            color: #92400e;
+        }
+
+        .score-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .score-value {
+            font-size: 72px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+            margin-bottom: 12px;
+            letter-spacing: -3px;
+        }
+
+        .task-health .score-value {
+            color: #059669;
+            text-shadow: 0 2px 8px rgba(5, 150, 105, 0.2);
+        }
+
+        .store-score .score-value {
+            color: #f59e0b;
+            text-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+        }
+
+        .score-subtitle {
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .task-health .score-subtitle {
+            color: #047857;
+        }
+
+        .store-score .score-subtitle {
+            color: #d97706;
+        }
+
+        .score-percentage {
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .task-health .score-percentage {
+            background: #059669;
+            color: white;
+        }
+
+        .store-score .score-percentage {
+            background: #f59e0b;
+            color: white;
         }
 
         .details-section {
-            padding: 0 24px 24px;
+            padding: 0 16px 24px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #18181b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .detail-value {
+            font-size: 20px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #18181b;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            box-shadow: 0 0 6px currentColor;
+        }
+
+        .status-good {
+            background: #059669;
+            color: #059669;
+        }
+
+        .status-warning {
+            background: #f59e0b;
+            color: #f59e0b;
         }
 
         .refresh-info {
-            padding: 16px 24px;
+            padding: 12px 16px;
+            background: #f9fafb;
+            border-radius: 12px;
+            margin: 0 16px 16px;
+            text-align: center;
+            font-size: 11px;
+            color: #71717a;
+            font-weight: 600;
         }
-    }
-</style>
-```
 
+        @media (max-width: 480px) {
+            .scores-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="score-widget">
@@ -196,86 +212,83 @@
                 <div class="score-icon">✓</div>
                 <div class="score-value" id="taskHealthScore">92</div>
                 <div class="score-subtitle">Health Score</div>
-                <div class="score-percentage positive" id="taskHealthTrend">↑ 5% vs last week</div>
+                <div class="score-percentage" id="taskHealthTrend">↑ 5%</div>
             </div>
 
-```
-        <div class="score-card store-score">
-            <div class="score-label">Store Score</div>
-            <div class="score-icon">★</div>
-            <div class="score-value" id="storeScore">88</div>
-            <div class="score-subtitle">Overall Rating</div>
-            <div class="score-percentage positive" id="storeScoreTrend">↑ 3% vs last week</div>
+            <div class="score-card store-score">
+                <div class="score-label">Store Score</div>
+                <div class="score-icon">★</div>
+                <div class="score-value" id="storeScore">88</div>
+                <div class="score-subtitle">Overall Rating</div>
+                <div class="score-percentage" id="storeScoreTrend">↑ 3%</div>
+            </div>
+        </div>
+
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    Tasks Completed
+                </div>
+                <div class="detail-value" id="tasksCompleted">47/50</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-warning"></span>
+                    Tasks In Progress
+                </div>
+                <div class="detail-value" id="tasksInProgress">3</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    On-Time Completion
+                </div>
+                <div class="detail-value" id="onTimeRate">94%</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">
+                    <span class="status-indicator status-good"></span>
+                    Team Compliance
+                </div>
+                <div class="detail-value" id="complianceRate">96%</div>
+            </div>
+        </div>
+
+        <div class="refresh-info">
+            Last updated: <span id="lastUpdated">Just now</span>
         </div>
     </div>
 
-    <div class="details-section">
-        <div class="detail-row">
-            <div class="detail-label">
-                <span class="status-indicator status-good"></span>
-                Tasks Completed
-            </div>
-            <div class="detail-value" id="tasksCompleted">47/50</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">
-                <span class="status-indicator status-warning"></span>
-                Tasks In Progress
-            </div>
-            <div class="detail-value" id="tasksInProgress">3</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">
-                <span class="status-indicator status-good"></span>
-                On-Time Completion
-            </div>
-            <div class="detail-value" id="onTimeRate">94%</div>
-        </div>
-        <div class="detail-row">
-            <div class="detail-label">
-                <span class="status-indicator status-good"></span>
-                Team Compliance
-            </div>
-            <div class="detail-value" id="complianceRate">96%</div>
-        </div>
-    </div>
-
-    <div class="refresh-info">
-        Last updated: <span id="lastUpdated">Just now</span>
-    </div>
-</div>
-
-<script>
-    function updateScores(taskHealth, storeScore, metrics) {
-        document.getElementById('taskHealthScore').textContent = taskHealth;
-        document.getElementById('storeScore').textContent = storeScore;
-        
-        if (metrics) {
-            if (metrics.tasksCompleted) {
-                document.getElementById('tasksCompleted').textContent = metrics.tasksCompleted;
+    <script>
+        function updateScores(taskHealth, storeScore, metrics) {
+            document.getElementById('taskHealthScore').textContent = taskHealth;
+            document.getElementById('storeScore').textContent = storeScore;
+            
+            if (metrics) {
+                if (metrics.tasksCompleted) {
+                    document.getElementById('tasksCompleted').textContent = metrics.tasksCompleted;
+                }
+                if (metrics.tasksInProgress) {
+                    document.getElementById('tasksInProgress').textContent = metrics.tasksInProgress;
+                }
+                if (metrics.onTimeRate) {
+                    document.getElementById('onTimeRate').textContent = metrics.onTimeRate + '%';
+                }
+                if (metrics.complianceRate) {
+                    document.getElementById('complianceRate').textContent = metrics.complianceRate + '%';
+                }
             }
-            if (metrics.tasksInProgress) {
-                document.getElementById('tasksInProgress').textContent = metrics.tasksInProgress;
-            }
-            if (metrics.onTimeRate) {
-                document.getElementById('onTimeRate').textContent = metrics.onTimeRate + '%';
-            }
-            if (metrics.complianceRate) {
-                document.getElementById('complianceRate').textContent = metrics.complianceRate + '%';
-            }
+            
+            document.getElementById('lastUpdated').textContent = 'Just now';
         }
-        
-        document.getElementById('lastUpdated').textContent = 'Just now';
-    }
 
-    function fetchWorkJamScores() {
-        console.log('Ready to fetch WorkJam scores');
-    }
+        function fetchWorkJamScores() {
+            console.log('Ready to fetch WorkJam scores');
+        }
 
-    setInterval(fetchWorkJamScores, 300000);
-    fetchWorkJamScores();
-</script>
-```
-
+        setInterval(fetchWorkJamScores, 300000);
+        fetchWorkJamScores();
+    </script>
 </body>
 </html>

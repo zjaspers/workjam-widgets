@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Performance Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: #f8f9fa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .dashboard-widget {
+            min-width: 220px;
+            max-width: 900px;
+            margin: 16px auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .widget-header {
+            padding: 24px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+        }
+
+        .widget-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .widget-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            padding: 24px;
+        }
+
+        .metric-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .metric-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .metric-card::after {
+            content: '→';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 16px;
+            color: #3b82f6;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .metric-card:hover::after {
+            opacity: 1;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .metric-value.green {
+            color: #059669;
+        }
+
+        .metric-value.blue {
+            color: #3b82f6;
+        }
+
+        .metric-value.amber {
+            color: #f59e0b;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-sublabel {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 4px;
+        }
+
+        .footer-info {
+            padding: 16px 24px;
+            background: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 480px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+                padding: 16px;
+            }
+
+            .widget-header {
+                padding: 20px 16px;
+            }
+
+            .dashboard-widget {
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-widget">
+        <div class="widget-header">
+            <div class="widget-title">Retail Task Performance</div>
+            <div class="widget-subtitle">Performance Overview</div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card" onclick="drillDown('task-completion')">
+                <div class="metric-value green">92.7%</div>
+                <div class="metric-label">Task Completion</div>
+                <div class="metric-sublabel">74,771 of 80,674 tasks</div>
+            </div>
+
+            <div class="metric-card" onclick="drillDown('sentiment')">
+                <div class="metric-value blue">81%</div>
+                <div class="metric-label">Positive Sentiment</div>
+                <div class="metric-sublabel">Employee engagement</div>
+            </div>
+
+            <div class="metric-card" onclick="drillDown('surveys')">
+                <div class="metric-value green">85.4%</div>
+                <div class="metric-label">Survey Compliance</div>
+                <div class="metric-sublabel">Program adoption</div>
+            </div>
+
+            <div class="metric-card" onclick="drillDown('visual-merch')">
+                <div class="metric-value green">99.7%</div>
+                <div class="metric-label">Visual Merch</div>
+                <div class="metric-sublabel">Customer-facing tasks</div>
+            </div>
+
+            <div class="metric-card" onclick="drillDown('at-risk')">
+                <div class="metric-value amber">303</div>
+                <div class="metric-label">At-Risk Locations</div>
+                <div class="metric-sublabel">21.7% of network</div>
+            </div>
+
+            <div class="metric-card" onclick="drillDown('model-locations')">
+                <div class="metric-value blue">488</div>
+                <div class="metric-label">Model Locations</div>
+                <div class="metric-sublabel">High performance</div>
+            </div>
+        </div>
+
+        <div class="footer-info">
+            Last updated: Today • 1,395 locations • 55,896 employees • <a href="#" onclick="viewFullReport(event)" style="color: #3b82f6; text-decoration: none; font-weight: 600;">View Full Report →</a>
+        </div>
+    </div>
+
+    <script>
+        function drillDown(metric) {
+            // Replace with actual drill-down URLs or reporting links
+            const reportUrls = {
+                'task-completion': 'https://your-analytics-platform.com/reports/task-completion',
+                'sentiment': 'https://your-analytics-platform.com/reports/sentiment',
+                'surveys': 'https://your-analytics-platform.com/reports/surveys',
+                'visual-merch': 'https://your-analytics-platform.com/reports/visual-merch',
+                'at-risk': 'https://your-analytics-platform.com/reports/at-risk-locations',
+                'model-locations': 'https://your-analytics-platform.com/reports/model-locations'
+            };
+
+            // For demo purposes, show alert - replace with actual navigation
+            alert(`Drilling down into ${metric} report.\n\nIn production, this would navigate to:\n${reportUrls[metric]}`);
+            
+            // Uncomment to actually navigate:
+            // window.location.href = reportUrls[metric];
+        }
+
+        function viewFullReport(event) {
+            event.preventDefault();
+            alert('Opening full performance report.\n\nIn production, this would link to your full analytics dashboard or reporting platform.');
+            
+            // Uncomment to navigate to full report:
+            // window.location.href = 'https://your-analytics-platform.com/reports/full-performance';
+        }
+    </script>
+</body>
+</html>

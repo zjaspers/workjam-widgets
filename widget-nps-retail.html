@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPS Score - Retail</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+            overflow-x: hidden;
+        }
+        
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+        }
+
+        .header {
+            padding: 16px;
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.2);
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 3px;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .nps-score-section {
+            padding: 24px 16px;
+            background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+            text-align: center;
+        }
+
+        .nps-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: #9f1239;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .nps-value {
+            font-size: 72px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #db2777;
+            line-height: 1;
+            margin-bottom: 8px;
+            letter-spacing: -3px;
+            text-shadow: 0 2px 8px rgba(219, 39, 119, 0.3);
+        }
+
+        .nps-rating {
+            font-size: 14px;
+            color: #9f1239;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .nps-change {
+            font-size: 12px;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 8px;
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .breakdown-section {
+            padding: 16px;
+            background: white;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #71717a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 14px;
+        }
+
+        .breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .breakdown-card {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+            border: 2px solid #e5e7eb;
+        }
+
+        .breakdown-card.promoters {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        }
+
+        .breakdown-card.passives {
+            border-color: #f59e0b;
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .breakdown-card.detractors {
+            border-color: #ef4444;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+        }
+
+        .breakdown-percent {
+            font-size: 32px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+        }
+
+        .promoters .breakdown-percent {
+            color: #059669;
+        }
+
+        .passives .breakdown-percent {
+            color: #d97706;
+        }
+
+        .detractors .breakdown-percent {
+            color: #dc2626;
+        }
+
+        .breakdown-label {
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .promoters .breakdown-label {
+            color: #065f52;
+        }
+
+        .passives .breakdown-label {
+            color: #92400e;
+        }
+
+        .detractors .breakdown-label {
+            color: #991b1b;
+        }
+
+        .breakdown-count {
+            font-size: 11px;
+            color: #71717a;
+            font-weight: 600;
+        }
+
+        .insights-section {
+            padding: 16px;
+            background: #f9fafb;
+        }
+
+        .insight-card {
+            background: white;
+            border-left: 4px solid #ec4899;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+        }
+
+        .insight-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #db2777;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+
+        .insight-text {
+            font-size: 12px;
+            color: #4b5373;
+            line-height: 1.6;
+        }
+
+        .trend-section {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .trend-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .trend-item {
+            text-align: center;
+        }
+
+        .trend-month {
+            font-size: 10px;
+            color: #71717a;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .trend-value {
+            font-size: 24px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: #db2777;
+            line-height: 1;
+        }
+
+        @media (max-width: 600px) {
+            .breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trend-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 14px 12px;
+            }
+
+            .nps-score-section {
+                padding: 20px 12px;
+            }
+
+            .nps-value {
+                font-size: 64px;
+            }
+
+            .breakdown-section,
+            .insights-section,
+            .trend-section {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <div class="header">
+            <div class="header-title">📊 Net Promoter Score</div>
+            <div class="header-subtitle">Store #<span id="store-number">452</span> - Customer Loyalty</div>
+        </div>
+
+        <div class="nps-score-section">
+            <div class="nps-label">Current NPS Score</div>
+            <div class="nps-value">51</div>
+            <div class="nps-rating">⭐ Excellent - Top Quartile</div>
+            <div class="nps-change">↗ +7 vs last quarter</div>
+        </div>
+
+        <div class="breakdown-section">
+            <div class="section-title">📈 Score Breakdown</div>
+            
+            <div class="breakdown-grid">
+                <div class="breakdown-card promoters">
+                    <div class="breakdown-percent">64%</div>
+                    <div class="breakdown-label">Promoters</div>
+                    <div class="breakdown-count">1,847 customers</div>
+                </div>
+
+                <div class="breakdown-card passives">
+                    <div class="breakdown-percent">23%</div>
+                    <div class="breakdown-label">Passives</div>
+                    <div class="breakdown-count">663 customers</div>
+                </div>
+
+                <div class="breakdown-card detractors">
+                    <div class="breakdown-percent">13%</div>
+                    <div class="breakdown-label">Detractors</div>
+                    <div class="breakdown-count">375 customers</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-section">
+            <div class="section-title">💡 Key Insights</div>
+            
+            <div class="insight-card">
+                <div class="insight-title">Top Praise</div>
+                <div class="insight-text">Associates' product knowledge (mentioned in 72% of positive feedback), store ambiance, and fast checkout experience.</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-title">Main Concerns</div>
+                <div class="insight-text">Out-of-stock popular sizes (38% of detractors) and inconsistent fitting room availability during peak hours.</div>
+            </div>
+
+            <div class="insight-card">
+                <div class="insight-title">Opportunity</div>
+                <div class="insight-text">Loyalty program enrollment at 47% - converting non-members could move score to 55+. Focus on sign-up at checkout.</div>
+            </div>
+        </div>
+
+        <div class="trend-section">
+            <div class="section-title">📅 Quarterly Trend</div>
+            
+            <div class="trend-grid">
+                <div class="trend-item">
+                    <div class="trend-month">Q1 2025</div>
+                    <div class="trend-value">46</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-month">Q2 2025</div>
+                    <div class="trend-value">42</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-month">Q3 2025</div>
+                    <div class="trend-value">44</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-month">Q4 2025</div>
+                    <div class="trend-value">51</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get WorkJam URL variables
+        const urlParams = new URLSearchParams(window.location.search);
+        const locationId = urlParams.get('locationId') || urlParams.get('externalLocationId') || '452';
+        
+        // Update UI
+        document.getElementById('store-number').textContent = locationId;
+
+        console.log('NPS Widget loaded for store:', locationId);
+    </script>
+</body>
+</html>
