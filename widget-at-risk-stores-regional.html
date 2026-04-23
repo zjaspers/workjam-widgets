@@ -8,7 +8,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=JetBrains+Mono:wght@700;800&display=swap');
 
-```
     * {
         margin: 0;
         padding: 0;
@@ -22,7 +21,6 @@
         margin: 0;
         min-width: 220px;
         max-width: 900px;
-        overflow-x: hidden;
     }
     
     .widget {
@@ -31,27 +29,27 @@
         width: 100%;
         margin: 0;
         background: white;
-        border-radius: 0;
+        border-radius: 20px;
         overflow: hidden;
-        box-shadow: none;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .header {
-        padding: 16px 16px;
+        padding: 24px 20px;
         background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         color: white;
-        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
     }
 
     .header-title {
-        font-size: 18px;
+        font-size: 20px;
         font-weight: 800;
         letter-spacing: -0.5px;
-        margin-bottom: 3px;
+        margin-bottom: 4px;
     }
 
     .header-subtitle {
-        font-size: 12px;
+        font-size: 13px;
         opacity: 0.95;
         font-weight: 500;
     }
@@ -59,18 +57,18 @@
     .region-badge {
         display: inline-block;
         background: rgba(255, 255, 255, 0.2);
-        padding: 3px 8px;
+        padding: 4px 10px;
         border-radius: 6px;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 700;
         font-family: 'JetBrains Mono', monospace;
-        margin-top: 4px;
+        margin-top: 6px;
     }
 
     .summary-section {
-        padding: 16px;
+        padding: 20px;
         background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
-        border-bottom: 2px solid #dc2626;
+        border-bottom: 3px solid #dc2626;
     }
 
     .summary-grid {
@@ -107,7 +105,7 @@
     }
 
     .stores-section {
-        padding: 16px;
+        padding: 20px;
     }
 
     .section-header {
@@ -247,26 +245,26 @@
     }
 
     .action-section {
-        padding: 16px;
+        padding: 20px;
         background: #f9fafb;
     }
 
     .action-button {
         display: block;
         width: 100%;
-        padding: 14px;
+        padding: 16px;
         background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
         color: white;
         text-align: center;
-        border-radius: 8px;
-        font-size: 13px;
+        border-radius: 12px;
+        font-size: 14px;
         font-weight: 800;
         text-decoration: none;
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2);
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
         transition: all 0.3s ease;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .action-button:hover {
@@ -295,13 +293,13 @@
 
     @media (max-width: 480px) {
         .header {
-            padding: 14px 12px;
+            padding: 20px 16px;
         }
 
         .summary-section,
         .stores-section,
         .action-section {
-            padding: 12px;
+            padding: 16px;
         }
 
         .summary-value {
@@ -317,7 +315,7 @@
         <div class="header">
             <div class="header-title">🚨 At-Risk Stores</div>
             <div class="header-subtitle">Regional Manager Dashboard</div>
-            <div class="region-badge" id="region-name">Columbus &amp; Cleveland Region</div>
+            <div class="region-badge" id="region-name">Columbus & Cleveland Region</div>
         </div>
 
 ```
@@ -547,7 +545,6 @@
 
     console.log('At-Risk Stores Widget loaded for region:', regionId);
 </script>
-```
 
 </body>
 </html>
