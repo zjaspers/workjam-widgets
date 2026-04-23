@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -23,256 +22,253 @@
             --radius: 12px;
         }
 
-```
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-        font-family: 'Inter', sans-serif;
-        background: var(--bg);
-        color: var(--text-primary);
-        min-height: 100vh;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
 
-    /* HEADER */
-    .header {
-        background: var(--wj-navy);
-        color: #fff;
-        padding: 0 40px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 66px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        box-shadow: 0 8px 32px rgba(43,57,144,0.12);
-    }
-
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-    }
-
-    .wj-logo-wrap {
-        display: flex;
-        align-items: center;
-    }
-
-    .wj-logo-text {
-        font-size: 24px;
-        font-weight: 800;
-        color: #fff;
-        letter-spacing: -0.5px;
-    }
-
-    .header-divider {
-        width: 1px;
-        height: 28px;
-        background: rgba(255,255,255,0.2);
-        margin: 0 4px;
-    }
-
-    .header-client {
-        font-size: 15px;
-        font-weight: 600;
-        color: #fff;
-        letter-spacing: 0.01em;
-    }
-
-    .header-sub {
-        font-size: 11px;
-        color: var(--wj-light);
-        margin-top: 1px;
-    }
-
-    .header-badge {
-        background: rgba(7,163,135,0.2);
-        border: 1px solid rgba(7,163,135,0.4);
-        border-radius: 20px;
-        padding: 5px 14px;
-        font-size: 11px;
-        font-weight: 600;
-        color: #7FF5E4;
-        letter-spacing: 0.05em;
-    }
-
-    /* NAV */
-    .nav {
-        background: var(--surface);
-        border-bottom: 2px solid var(--border);
-        padding: 0 40px;
-        display: flex;
-        gap: 0;
-        position: sticky;
-        top: 66px;
-        z-index: 90;
-        overflow-x: auto;
-    }
-
-    .nav::-webkit-scrollbar {
-        display: none;
-    }
-
-    .nav-tab {
-        padding: 14px 18px;
-        font-size: 12.5px;
-        font-weight: 500;
-        color: var(--text-muted);
-        border-bottom: 3px solid transparent;
-        cursor: pointer;
-        white-space: nowrap;
-        transition: all 0.15s;
-        letter-spacing: 0.01em;
-        margin-bottom: -2px;
-    }
-
-    .nav-tab:hover {
-        color: var(--wj-navy);
-    }
-
-    .nav-tab.active {
-        color: var(--wj-navy);
-        border-bottom-color: var(--wj-teal);
-        font-weight: 600;
-    }
-
-    /* PAGE */
-    .page {
-        display: none;
-        padding: 32px 40px 64px;
-        max-width: 1440px;
-        margin: 0 auto;
-    }
-
-    .page.active {
-        display: block;
-    }
-
-    /* SECTION HEADER */
-    .section-header {
-        margin-bottom: 24px;
-    }
-
-    .section-eyebrow {
-        font-size: 10.5px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        color: var(--wj-teal);
-        text-transform: uppercase;
-        margin-bottom: 5px;
-    }
-
-    .section-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--text-primary);
-        line-height: 1.2;
-    }
-
-    .section-desc {
-        font-size: 13px;
-        color: var(--text-sec);
-        margin-top: 5px;
-        line-height: 1.6;
-    }
-
-    /* WIDGET GRID */
-    .widget-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-        gap: 18px;
-        margin-bottom: 32px;
-    }
-
-    .widget-card {
-        background: var(--surface);
-        border-radius: var(--radius);
-        padding: 24px;
-        box-shadow: var(--shadow-sm);
-        border: 1px solid var(--border);
-        transition: all 0.15s;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .widget-card:hover {
-        box-shadow: var(--shadow-md);
-        transform: translateY(-2px);
-    }
-
-    .widget-icon {
-        font-size: 36px;
-        margin-bottom: 14px;
-    }
-
-    .widget-title {
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 8px;
-        line-height: 1.3;
-    }
-
-    .widget-desc {
-        font-size: 12px;
-        color: var(--text-sec);
-        line-height: 1.6;
-        margin-bottom: 16px;
-        flex-grow: 1;
-    }
-
-    .widget-link {
-        display: inline-block;
-        padding: 10px 18px;
-        background: var(--wj-teal);
-        color: white;
-        text-decoration: none;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        text-align: center;
-        transition: all 0.15s;
-        letter-spacing: 0.01em;
-    }
-
-    .widget-link:hover {
-        background: #065f52;
-        transform: translateY(-1px);
-    }
-
-    /* FOOTER */
-    .footer {
-        text-align: center;
-        padding: 40px 20px;
-        color: var(--text-muted);
-        font-size: 12px;
-    }
-
-    @media (max-width: 768px) {
+        /* HEADER */
         .header {
-            padding: 0 20px;
+            background: var(--wj-navy);
+            color: #fff;
+            padding: 0 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 66px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 8px 32px rgba(43,57,144,0.12);
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .wj-logo-wrap {
+            display: flex;
+            align-items: center;
+        }
+
+        .wj-logo-text {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .header-divider {
+            width: 1px;
+            height: 28px;
+            background: rgba(255,255,255,0.2);
+            margin: 0 4px;
+        }
+
+        .header-client {
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.01em;
+        }
+
+        .header-sub {
+            font-size: 11px;
+            color: var(--wj-light);
+            margin-top: 1px;
+        }
+
+        .header-badge {
+            background: rgba(7,163,135,0.2);
+            border: 1px solid rgba(7,163,135,0.4);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #7FF5E4;
+            letter-spacing: 0.05em;
+        }
+
+        /* NAV */
         .nav {
-            padding: 0 20px;
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            padding: 0 40px;
+            display: flex;
+            gap: 0;
+            position: sticky;
+            top: 66px;
+            z-index: 90;
+            overflow-x: auto;
         }
 
+        .nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            padding: 14px 18px;
+            font-size: 12.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s;
+            letter-spacing: 0.01em;
+            margin-bottom: -2px;
+        }
+
+        .nav-tab:hover {
+            color: var(--wj-navy);
+        }
+
+        .nav-tab.active {
+            color: var(--wj-navy);
+            border-bottom-color: var(--wj-teal);
+            font-weight: 600;
+        }
+
+        /* PAGE */
         .page {
-            padding: 24px 20px 48px;
+            display: none;
+            padding: 32px 40px 64px;
+            max-width: 1440px;
+            margin: 0 auto;
         }
 
+        .page.active {
+            display: block;
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-eyebrow {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--wj-teal);
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: var(--text-sec);
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        /* WIDGET GRID */
         .widget-grid {
-            grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 18px;
+            margin-bottom: 32px;
         }
-    }
-</style>
-```
 
+        .widget-card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            transition: all 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .widget-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .widget-icon {
+            font-size: 36px;
+            margin-bottom: 14px;
+        }
+
+        .widget-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .widget-desc {
+            font-size: 12px;
+            color: var(--text-sec);
+            line-height: 1.6;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+
+        .widget-link {
+            display: inline-block;
+            padding: 10px 18px;
+            background: var(--wj-teal);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.15s;
+            letter-spacing: 0.01em;
+        }
+
+        .widget-link:hover {
+            background: #065f52;
+            transform: translateY(-1px);
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 20px;
+            }
+
+            .nav {
+                padding: 0 20px;
+            }
+
+            .page {
+                padding: 24px 20px 48px;
+            }
+
+            .widget-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- HEADER -->
@@ -287,330 +283,355 @@
                 <div class="header-sub">Solutions Consulting</div>
             </div>
         </div>
-        <div class="header-badge">40+ WIDGETS</div>
+        <div class="header-badge">44+ WIDGETS</div>
     </div>
 
-```
-<!-- NAV -->
-<div class="nav">
-    <div class="nav-tab active" onclick="showPage('mobile')">📱 Mobile</div>
-    <div class="nav-tab" onclick="showPage('frontline')">🏪 Frontline & Store Manager</div>
-    <div class="nav-tab" onclick="showPage('field')">📊 District & Field Leader</div>
-    <div class="nav-tab" onclick="showPage('regional')">🗺️ Regional Manager</div>
-    <div class="nav-tab" onclick="showPage('admin')">👔 Admin & Executive</div>
-</div>
-
-<!-- MOBILE PAGE -->
-<div class="page active" id="mobile">
-    <div class="section-header">
-        <div class="section-eyebrow">Mobile Metric Cards</div>
-        <div class="section-title">Quick Stats for Frontline Teams</div>
-        <div class="section-desc">Compact, mobile-optimized metric cards with bold numbers and Cal AI design.</div>
+    <!-- NAV -->
+    <div class="nav">
+        <div class="nav-tab active" onclick="showPage('mobile')">📱 Mobile</div>
+        <div class="nav-tab" onclick="showPage('frontline')">🏪 Frontline & Store Manager</div>
+        <div class="nav-tab" onclick="showPage('field')">📊 District & Field Leader</div>
+        <div class="nav-tab" onclick="showPage('regional')">🗺️ Regional Manager</div>
+        <div class="nav-tab" onclick="showPage('admin')">👔 Admin & Executive</div>
     </div>
 
-    <div class="widget-grid">
-        <div class="widget-card">
-            <div class="widget-icon">✅</div>
-            <div class="widget-title">Task Completion</div>
-            <div class="widget-desc">Mobile metric card - 92.7% task completion with green gradient and text shadow.</div>
-            <a href="mobile-task-completion.html" class="widget-link">View Widget</a>
+    <!-- MOBILE PAGE -->
+    <div class="page active" id="mobile">
+        <div class="section-header">
+            <div class="section-eyebrow">Mobile Metric Cards</div>
+            <div class="section-title">Quick Stats for Frontline Teams</div>
+            <div class="section-desc">Compact, mobile-optimized metric cards with bold numbers and Cal AI design.</div>
         </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">♥️</div>
-            <div class="widget-title">Positive Sentiment</div>
-            <div class="widget-desc">Mobile metric card - 81% positive sentiment with red gradient and bold numbers.</div>
-            <a href="mobile-sentiment.html" class="widget-link">View Widget</a>
-        </div>
+        <div class="widget-grid">
+            <div class="widget-card">
+                <div class="widget-icon">✅</div>
+                <div class="widget-title">Task Completion</div>
+                <div class="widget-desc">Mobile metric card - 92.7% task completion with green gradient and text shadow.</div>
+                <a href="mobile-task-completion.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">⚠️</div>
-            <div class="widget-title">At-Risk Stores</div>
-            <div class="widget-desc">Mobile metric card - 303 at-risk stores with orange gradient and 64px value.</div>
-            <a href="mobile-at-risk-stores.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">♥️</div>
+                <div class="widget-title">Positive Sentiment</div>
+                <div class="widget-desc">Mobile metric card - 81% positive sentiment with red gradient and bold numbers.</div>
+                <a href="mobile-sentiment.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">⭐</div>
-            <div class="widget-title">Model Stores</div>
-            <div class="widget-desc">Mobile metric card - 488 model stores with blue gradient and glowing number.</div>
-            <a href="mobile-model-stores.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">⚠️</div>
+                <div class="widget-title">At-Risk Stores</div>
+                <div class="widget-desc">Mobile metric card - 303 at-risk stores with orange gradient and 64px value.</div>
+                <a href="mobile-at-risk-stores.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">📈</div>
-            <div class="widget-title">Maturity Stage</div>
-            <div class="widget-desc">Mobile metric card - Stage 3 operational maturity with purple gradient.</div>
-            <a href="mobile-maturity-stage.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">⭐</div>
+                <div class="widget-title">Model Stores</div>
+                <div class="widget-desc">Mobile metric card - 488 model stores with blue gradient and glowing number.</div>
+                <a href="mobile-model-stores.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">🔔</div>
-            <div class="widget-title">Overdue Tasks</div>
-            <div class="widget-desc">Mobile metric card - 7 overdue tasks with pulsing animation and red border alert.</div>
-            <a href="mobile-overdue-tasks.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">📈</div>
+                <div class="widget-title">Maturity Stage</div>
+                <div class="widget-desc">Mobile metric card - Stage 3 operational maturity with purple gradient.</div>
+                <a href="mobile-maturity-stage.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">🏅</div>
-            <div class="widget-title">Store Rank</div>
-            <div class="widget-desc">Mobile metric card - #47/82 district ranking with yellow gradient.</div>
-            <a href="mobile-store-rank.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🔔</div>
+                <div class="widget-title">Overdue Tasks</div>
+                <div class="widget-desc">Mobile metric card - 7 overdue tasks with pulsing animation and red border alert.</div>
+                <a href="mobile-overdue-tasks.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">💵</div>
-            <div class="widget-title">Bonus Impact</div>
-            <div class="widget-desc">Mobile metric card - $2.4K bonus at risk with mint gradient.</div>
-            <a href="mobile-bonus-impact.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🏅</div>
+                <div class="widget-title">Store Rank</div>
+                <div class="widget-desc">Mobile metric card - #47/82 district ranking with yellow gradient.</div>
+                <a href="mobile-store-rank.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">⏰</div>
-            <div class="widget-title">Late Tasks</div>
-            <div class="widget-desc">Mobile metric card - 6,300 late tasks = $2-4M at risk with red/pink gradient.</div>
-            <a href="mobile-late-tasks.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">💵</div>
+                <div class="widget-title">Bonus Impact</div>
+                <div class="widget-desc">Mobile metric card - $2.4K bonus at risk with mint gradient.</div>
+                <a href="mobile-bonus-impact.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">💬</div>
-            <div class="widget-title">Comment Engagement</div>
-            <div class="widget-desc">Mobile metric card - 22K comments opportunity with blue gradient.</div>
-            <a href="mobile-comment-engagement.html" class="widget-link">View Widget</a>
-        </div>
-    </div>
-</div>
+            <div class="widget-card">
+                <div class="widget-icon">⏰</div>
+                <div class="widget-title">Late Tasks</div>
+                <div class="widget-desc">Mobile metric card - 6,300 late tasks = $2-4M at risk with red/pink gradient.</div>
+                <a href="mobile-late-tasks.html" class="widget-link">View Widget</a>
+            </div>
 
-<!-- FRONTLINE PAGE -->
-<div class="page" id="frontline">
-    <div class="section-header">
-        <div class="section-eyebrow">Frontline Worker & Store Manager</div>
-        <div class="section-title">Day-to-Day Operations & Performance</div>
-        <div class="section-desc">Widgets for individual contributors and store-level managers.</div>
-    </div>
-
-    <div class="widget-grid">
-        <div class="widget-card">
-            <div class="widget-icon">✅</div>
-            <div class="widget-title">Task Health Score</div>
-            <div class="widget-desc">Real-time task health (92) and store score (88) with 4 key metrics in responsive cards.</div>
-            <a href="task-health-score.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🎯</div>
-            <div class="widget-title">Store Manager Dashboard</div>
-            <div class="widget-desc">Store vs network comparison with priority actions, completion rates, and focus areas.</div>
-            <a href="store-manager-actionable.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🏪</div>
-            <div class="widget-title">C-Store Analytics Dashboard</div>
-            <div class="widget-desc">Complete C-Store analytics: fuel performance, inside store sales, wings program, and operational metrics.</div>
-            <a href="widget-cstore-dashboard.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">⛽</div>
-            <div class="widget-title">Fuel Price Competition</div>
-            <div class="widget-desc">Local fuel price comparison (your price vs 5 competitors within 2 miles) with recommendations.</div>
-            <a href="widget-fuel-price-comparison.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🔥</div>
-            <div class="widget-title">At-Risk Work (Store Manager)</div>
-            <div class="widget-desc">Critical overdue tasks for store managers - fuel safety, food safety, compliance. Links to WorkJam audits.</div>
-            <a href="widget-at-risk-work-store.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🌤️</div>
-            <div class="widget-title">Weather - Melbourne</div>
-            <div class="widget-desc">Weather widget for Melbourne using weatherwidget.io integration with Cal AI styling.</div>
-            <a href="widget-weather-melbourne.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🌍</div>
-            <div class="widget-title">Weather - Dynamic Location</div>
-            <div class="widget-desc">Weather widget that uses WorkJam {{city}} variable for any location with auto-updating.</div>
-            <a href="widget-weather-dynamic.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">📍</div>
-            <div class="widget-title">Location Variable Demo</div>
-            <div class="widget-desc">Demo widget showing WorkJam variable usage (locationId, city, region, etc.) with debug panel.</div>
-            <a href="widget-location-variable.html" class="widget-link">View Widget</a>
+            <div class="widget-card">
+                <div class="widget-icon">💬</div>
+                <div class="widget-title">Comment Engagement</div>
+                <div class="widget-desc">Mobile metric card - 22K comments opportunity with blue gradient.</div>
+                <a href="mobile-comment-engagement.html" class="widget-link">View Widget</a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- FIELD LEADER PAGE -->
-<div class="page" id="field">
-    <div class="section-header">
-        <div class="section-eyebrow">District & Field Leader</div>
-        <div class="section-title">Multi-Store Insights & Leadership</div>
-        <div class="section-desc">Dashboards for district managers and field leaders overseeing multiple locations.</div>
-    </div>
-
-    <div class="widget-grid">
-        <div class="widget-card">
-            <div class="widget-icon">💡</div>
-            <div class="widget-title">Engagement → Execution Lift</div>
-            <div class="widget-desc">3.2pt execution lift insight - high engagement stores (90.8%) outperform low engagement stores (87.6%) by 3.2 points.</div>
-            <a href="widget-engagement-execution.html" class="widget-link">View Widget</a>
+    <!-- FRONTLINE PAGE -->
+    <div class="page" id="frontline">
+        <div class="section-header">
+            <div class="section-eyebrow">Frontline Worker & Store Manager</div>
+            <div class="section-title">Day-to-Day Operations & Performance</div>
+            <div class="section-desc">Widgets for individual contributors and store-level managers.</div>
         </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">📦</div>
-            <div class="widget-title">Back-of-House Execution Gap</div>
-            <div class="widget-desc">16pt performance gap between Visual Merch (99.7%) and Inventory (83.8%). Each 1pt = $3,600 financial impact.</div>
-            <a href="widget-boh-gap.html" class="widget-link">View Widget</a>
-        </div>
+        <div class="widget-grid">
+            <div class="widget-card">
+                <div class="widget-icon">✅</div>
+                <div class="widget-title">Task Health Score</div>
+                <div class="widget-desc">Real-time task health (92) and store score (88) with 4 key metrics in responsive cards.</div>
+                <a href="task-health-score.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">🏆</div>
-            <div class="widget-title">Model Store Playbooks</div>
-            <div class="widget-desc">Top 3 model stores (League City TX, Concord NC, Charlotte NC) with specific practices and routines to replicate.</div>
-            <a href="widget-model-stores.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🎯</div>
+                <div class="widget-title">Store Manager Dashboard</div>
+                <div class="widget-desc">Store vs network comparison with priority actions, completion rates, and focus areas.</div>
+                <a href="store-manager-actionable.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">💬</div>
-            <div class="widget-title">Comment Engagement Gap</div>
-            <div class="widget-desc">2.5:1 reaction-to-comment ratio (56K reactions vs 22K comments). Opportunity to drive deeper engagement.</div>
-            <a href="widget-comment-engagement.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🏪</div>
+                <div class="widget-title">C-Store Analytics Dashboard</div>
+                <div class="widget-desc">Complete C-Store analytics: fuel performance, inside store sales, wings program, and operational metrics.</div>
+                <a href="widget-cstore-dashboard.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">📊</div>
-            <div class="widget-title">Survey Response Benchmark</div>
-            <div class="widget-desc">7-Eleven's 1-in-3 survey response rate best practice (33.3% vs industry 15-20%).</div>
-            <a href="widget-survey-benchmark.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">⛽</div>
+                <div class="widget-title">Fuel Price Competition</div>
+                <div class="widget-desc">Local fuel price comparison (your price vs 5 competitors within 2 miles) with recommendations.</div>
+                <a href="widget-fuel-price-comparison.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">📊</div>
-            <div class="widget-title">Retail Task Performance</div>
-            <div class="widget-desc">Desktop dashboard with task completion, sentiment, at-risk locations, and model site metrics.</div>
-            <a href="retail-task-performance-desktop.html" class="widget-link">View Widget</a>
-        </div>
-    </div>
-</div>
+            <div class="widget-card">
+                <div class="widget-icon">🔥</div>
+                <div class="widget-title">At-Risk Work (Store Manager)</div>
+                <div class="widget-desc">Critical overdue tasks for store managers - fuel safety, food safety, compliance. Links to WorkJam audits.</div>
+                <a href="widget-at-risk-work-store.html" class="widget-link">View Widget</a>
+            </div>
 
-<!-- REGIONAL PAGE -->
-<div class="page" id="regional">
-    <div class="section-header">
-        <div class="section-eyebrow">Regional Manager</div>
-        <div class="section-title">Regional Performance & Recovery Plans</div>
-        <div class="section-desc">Area-level dashboards for regional managers overseeing multiple districts.</div>
-    </div>
+            <div class="widget-card">
+                <div class="widget-icon">📊</div>
+                <div class="widget-title">NPS Score - C-Store</div>
+                <div class="widget-desc">Net Promoter Score 42 (Good) with promoter/passive/detractor breakdown, insights, and 4-month trend.</div>
+                <a href="widget-nps-cstore.html" class="widget-link">View Widget</a>
+            </div>
 
-    <div class="widget-grid">
-        <div class="widget-card">
-            <div class="widget-icon">🚨</div>
-            <div class="widget-title">At-Risk Store Recovery</div>
-            <div class="widget-desc">303 stores at 81.4% completion with 30-day recovery plan, weekly goals, and targeted interventions.</div>
-            <a href="widget-at-risk-recovery.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🕵️</div>
+                <div class="widget-title">Mystery Shop - C-Store</div>
+                <div class="widget-desc">Latest mystery shop score (87/100) with category breakdown, failed items, and priority action plans.</div>
+                <a href="widget-mystery-shop-cstore.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">🗺️</div>
-            <div class="widget-title">At-Risk Stores (Regional View)</div>
-            <div class="widget-desc">Columbus & Cleveland region - 11 at-risk stores with detailed metrics, CSAT scores, and audit links.</div>
-            <a href="widget-at-risk-stores-regional.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">💖</div>
+                <div class="widget-title">NPS Score - Retail</div>
+                <div class="widget-desc">Net Promoter Score 51 (Excellent) with customer feedback insights, loyalty opportunities, and quarterly trends.</div>
+                <a href="widget-nps-retail.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">💰</div>
-            <div class="widget-title">Late Task Financial Cost</div>
-            <div class="widget-desc">6,300 late tasks = $2-4M at risk. Financial breakdown by task type with cost per day calculations.</div>
-            <a href="widget-late-task-cost.html" class="widget-link">View Widget</a>
-        </div>
-    </div>
-</div>
+            <div class="widget-card">
+                <div class="widget-icon">🛍️</div>
+                <div class="widget-title">Mystery Shop - Retail</div>
+                <div class="widget-desc">Latest mystery shop score (92/100) with visual merchandising focus, planogram compliance, and action items.</div>
+                <a href="widget-mystery-shop-retail.html" class="widget-link">View Widget</a>
+            </div>
 
-<!-- ADMIN PAGE -->
-<div class="page" id="admin">
-    <div class="section-header">
-        <div class="section-eyebrow">Admin & Executive</div>
-        <div class="section-title">Enterprise Analytics & Platform Health</div>
-        <div class="section-desc">Executive dashboards and enterprise-wide performance metrics.</div>
-    </div>
+            <div class="widget-card">
+                <div class="widget-icon">🌤️</div>
+                <div class="widget-title">Weather - Melbourne</div>
+                <div class="widget-desc">Weather widget for Melbourne using weatherwidget.io integration with Cal AI styling.</div>
+                <a href="widget-weather-melbourne.html" class="widget-link">View Widget</a>
+            </div>
 
-    <div class="widget-grid">
-        <div class="widget-card">
-            <div class="widget-icon">🚀</div>
-            <div class="widget-title">Platform Adoption</div>
-            <div class="widget-desc">Desktop dashboard showing platform maturity, content views, surveys, and training metrics.</div>
-            <a href="platform-adoption-desktop.html" class="widget-link">View Widget</a>
-        </div>
+            <div class="widget-card">
+                <div class="widget-icon">🌍</div>
+                <div class="widget-title">Weather - Dynamic Location</div>
+                <div class="widget-desc">Weather widget that uses WorkJam {{city}} variable for any location with auto-updating.</div>
+                <a href="widget-weather-dynamic.html" class="widget-link">View Widget</a>
+            </div>
 
-        <div class="widget-card">
-            <div class="widget-icon">📊</div>
-            <div class="widget-title">Task Dashboard</div>
-            <div class="widget-desc">Task analytics overview with completion rates, at-risk regions, active tasks, and upcoming visual sets.</div>
-            <a href="task_dashboard.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🏪</div>
-            <div class="widget-title">C-Store Sales Dashboard (Legacy)</div>
-            <div class="widget-desc">Convenience store sales performance metrics and analytics dashboard.</div>
-            <a href="CStoreSalesDash.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">🍽️</div>
-            <div class="widget-title">Restaurant Sales</div>
-            <div class="widget-desc">Restaurant sales metrics and performance tracking widget.</div>
-            <a href="WJ_Restaurant_Sales.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">📋</div>
-            <div class="widget-title">Task Real-Time</div>
-            <div class="widget-desc">Real-time task monitoring and execution tracking.</div>
-            <a href="WJ_Task_Real.html" class="widget-link">View Widget</a>
-        </div>
-
-        <div class="widget-card">
-            <div class="widget-icon">⚠️</div>
-            <div class="widget-title">DRR Mutilation Impact</div>
-            <div class="widget-desc">DRR mutilation impact tracking with target vs. actual performance metrics.</div>
-            <a href="drr_mutilation_widget.html" class="widget-link">View Widget</a>
+            <div class="widget-card">
+                <div class="widget-icon">📍</div>
+                <div class="widget-title">Location Variable Demo</div>
+                <div class="widget-desc">Demo widget showing WorkJam variable usage (locationId, city, region, etc.) with debug panel.</div>
+                <a href="widget-location-variable.html" class="widget-link">View Widget</a>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- FOOTER -->
-<div class="footer">
-    <p>WorkJam Widget Library • Built for Solutions Consulting • Cal AI Design Principles</p>
-</div>
+    <!-- FIELD LEADER PAGE -->
+    <div class="page" id="field">
+        <div class="section-header">
+            <div class="section-eyebrow">District & Field Leader</div>
+            <div class="section-title">Multi-Store Insights & Leadership</div>
+            <div class="section-desc">Dashboards for district managers and field leaders overseeing multiple locations.</div>
+        </div>
 
-<script>
-    function showPage(pageId) {
-        // Hide all pages
-        document.querySelectorAll('.page').forEach(page => {
-            page.classList.remove('active');
-        });
+        <div class="widget-grid">
+            <div class="widget-card">
+                <div class="widget-icon">💡</div>
+                <div class="widget-title">Engagement → Execution Lift</div>
+                <div class="widget-desc">3.2pt execution lift insight - high engagement stores (90.8%) outperform low engagement stores (87.6%) by 3.2 points.</div>
+                <a href="widget-engagement-execution.html" class="widget-link">View Widget</a>
+            </div>
 
-        // Remove active from all tabs
-        document.querySelectorAll('.nav-tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
+            <div class="widget-card">
+                <div class="widget-icon">📦</div>
+                <div class="widget-title">Back-of-House Execution Gap</div>
+                <div class="widget-desc">16pt performance gap between Visual Merch (99.7%) and Inventory (83.8%). Each 1pt = $3,600 financial impact.</div>
+                <a href="widget-boh-gap.html" class="widget-link">View Widget</a>
+            </div>
 
-        // Show selected page
-        document.getElementById(pageId).classList.add('active');
+            <div class="widget-card">
+                <div class="widget-icon">🏆</div>
+                <div class="widget-title">Model Store Playbooks</div>
+                <div class="widget-desc">Top 3 model stores (League City TX, Concord NC, Charlotte NC) with specific practices and routines to replicate.</div>
+                <a href="widget-model-stores.html" class="widget-link">View Widget</a>
+            </div>
 
-        // Activate selected tab
-        event.target.classList.add('active');
-    }
-</script>
-```
+            <div class="widget-card">
+                <div class="widget-icon">💬</div>
+                <div class="widget-title">Comment Engagement Gap</div>
+                <div class="widget-desc">2.5:1 reaction-to-comment ratio (56K reactions vs 22K comments). Opportunity to drive deeper engagement.</div>
+                <a href="widget-comment-engagement.html" class="widget-link">View Widget</a>
+            </div>
 
+            <div class="widget-card">
+                <div class="widget-icon">📊</div>
+                <div class="widget-title">Survey Response Benchmark</div>
+                <div class="widget-desc">7-Eleven's 1-in-3 survey response rate best practice (33.3% vs industry 15-20%).</div>
+                <a href="widget-survey-benchmark.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">📊</div>
+                <div class="widget-title">Retail Task Performance</div>
+                <div class="widget-desc">Desktop dashboard with task completion, sentiment, at-risk locations, and model site metrics.</div>
+                <a href="retail-task-performance-desktop.html" class="widget-link">View Widget</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGIONAL PAGE -->
+    <div class="page" id="regional">
+        <div class="section-header">
+            <div class="section-eyebrow">Regional Manager</div>
+            <div class="section-title">Regional Performance & Recovery Plans</div>
+            <div class="section-desc">Area-level dashboards for regional managers overseeing multiple districts.</div>
+        </div>
+
+        <div class="widget-grid">
+            <div class="widget-card">
+                <div class="widget-icon">🚨</div>
+                <div class="widget-title">At-Risk Store Recovery</div>
+                <div class="widget-desc">303 stores at 81.4% completion with 30-day recovery plan, weekly goals, and targeted interventions.</div>
+                <a href="widget-at-risk-recovery.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">🗺️</div>
+                <div class="widget-title">At-Risk Stores (Regional View)</div>
+                <div class="widget-desc">Columbus & Cleveland region - 11 at-risk stores with detailed metrics, CSAT scores, and audit links.</div>
+                <a href="widget-at-risk-stores-regional.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">💰</div>
+                <div class="widget-title">Late Task Financial Cost</div>
+                <div class="widget-desc">6,300 late tasks = $2-4M at risk. Financial breakdown by task type with cost per day calculations.</div>
+                <a href="widget-late-task-cost.html" class="widget-link">View Widget</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PAGE -->
+    <div class="page" id="admin">
+        <div class="section-header">
+            <div class="section-eyebrow">Admin & Executive</div>
+            <div class="section-title">Enterprise Analytics & Platform Health</div>
+            <div class="section-desc">Executive dashboards and enterprise-wide performance metrics.</div>
+        </div>
+
+        <div class="widget-grid">
+            <div class="widget-card">
+                <div class="widget-icon">🚀</div>
+                <div class="widget-title">Platform Adoption</div>
+                <div class="widget-desc">Desktop dashboard showing platform maturity, content views, surveys, and training metrics.</div>
+                <a href="platform-adoption-desktop.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">📊</div>
+                <div class="widget-title">Task Dashboard</div>
+                <div class="widget-desc">Task analytics overview with completion rates, at-risk regions, active tasks, and upcoming visual sets.</div>
+                <a href="task_dashboard.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">🏪</div>
+                <div class="widget-title">C-Store Sales Dashboard (Legacy)</div>
+                <div class="widget-desc">Convenience store sales performance metrics and analytics dashboard.</div>
+                <a href="CStoreSalesDash.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">🍽️</div>
+                <div class="widget-title">Restaurant Sales</div>
+                <div class="widget-desc">Restaurant sales metrics and performance tracking widget.</div>
+                <a href="WJ_Restaurant_Sales.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">📋</div>
+                <div class="widget-title">Task Real-Time</div>
+                <div class="widget-desc">Real-time task monitoring and execution tracking.</div>
+                <a href="WJ_Task_Real.html" class="widget-link">View Widget</a>
+            </div>
+
+            <div class="widget-card">
+                <div class="widget-icon">⚠️</div>
+                <div class="widget-title">DRR Mutilation Impact</div>
+                <div class="widget-desc">DRR mutilation impact tracking with target vs. actual performance metrics.</div>
+                <a href="drr_mutilation_widget.html" class="widget-link">View Widget</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <p>WorkJam Widget Library • Built for Solutions Consulting • Cal AI Design Principles</p>
+    </div>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+
+            // Activate selected tab
+            event.target.classList.add('active');
+        }
+    </script>
 </body>
 </html>
