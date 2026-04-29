@@ -129,6 +129,349 @@
             }
         }
     </style>
+<style>
+
+
+/* =========================================================
+   WorkJam Insight-First Widget Constraints
+   - Standalone HTML
+   - Responsive iframe width: min 220px / max 900px
+   - Remove top banner/header real estate
+   - Surface insight/metric content first
+   - Normalize to WorkJam visual system
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --wj-navy:#2B3990;
+  --wj-teal:#07A387;
+  --wj-gold:#C3A427;
+  --wj-light:#A5B0D0;
+  --bg:#F2F4F8;
+  --surface:#FFFFFF;
+  --surface-alt:#F7F9FC;
+  --border:#E2E7F0;
+  --text-primary:#1A1A2E;
+  --text-sec:#4B5373;
+  --text-muted:#8892AC;
+  --green:#07A387;
+  --green-bg:#D0F0EA;
+  --amber:#C3A427;
+  --amber-bg:#FDF3CE;
+  --red:#C0392B;
+  --red-bg:#FAD4D0;
+  --shadow-sm:0 1px 4px rgba(43,57,144,.07);
+  --shadow-md:0 4px 16px rgba(43,57,144,.10);
+  --radius:12px;
+  --radius-sm:8px;
+}
+
+* { box-sizing:border-box; }
+html, body { margin:0 !important; padding:0 !important; }
+body {
+  font-family:'Inter', sans-serif !important;
+  background:transparent !important;
+  color:var(--text-primary) !important;
+  min-width:220px !important;
+  max-width:900px !important;
+  width:100% !important;
+  overflow-x:hidden !important;
+  line-height:1.45 !important;
+}
+
+/* iframe shell */
+.widget,
+.dashboard-widget,
+.dashboard-container,
+.widget-container,
+.location-widget,
+.weather-widget {
+  min-width:220px !important;
+  max-width:900px !important;
+  width:100% !important;
+  margin:0 !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  background:var(--surface) !important;
+  overflow:hidden !important;
+}
+
+/* Remove top banners/headers so the metric/insight appears first. */
+.header,
+.widget-header,
+.dashboard-header {
+  display:none !important;
+  height:0 !important;
+  padding:0 !important;
+  margin:0 !important;
+  overflow:hidden !important;
+}
+
+/* Keep urgent alert content compact; it can be a valid insight, not a giant banner. */
+.alert-banner {
+  padding:10px 12px !important;
+  background:var(--red-bg) !important;
+  border:2px solid var(--red) !important;
+  border-radius:var(--radius) !important;
+  margin:0 0 10px 0 !important;
+}
+
+/* No decorative gradients/text shadows in metric-first embed mode. */
+.metric-tile,
+.metric-card,
+.stat-card,
+.summary-card,
+.breakdown-card,
+.category-item,
+.store-card,
+.action-card,
+.content-block,
+.info-box,
+.debug-section,
+.failure-card,
+.insight-card,
+.example-card,
+.playbook-item,
+.comparison-side,
+.impact-box,
+.gap-callout,
+.calculation-box,
+.your-price-section,
+.score-section,
+.nps-score-section,
+.benchmark-hero,
+.impact-hero,
+.problem-section,
+.summary-section,
+.weather-container,
+.competitor-row,
+.task-card,
+.task-item {
+  box-shadow:var(--shadow-sm) !important;
+  border-radius:var(--radius) !important;
+}
+
+/* Section spacing tightened for WorkJam widget real estate. */
+.metrics-section,
+.content-section,
+.breakdown-section,
+.actions,
+.impact-hero,
+.benchmark-hero,
+.store-grid,
+.playbook-section,
+.task-breakdown,
+.insight-box,
+.problem-section,
+.examples-section,
+.recovery-plan,
+.summary-section,
+.stores-section,
+.action-section,
+.nps-score-section,
+.score-section,
+.categories-section,
+.failures-section,
+.action-items,
+.insights-section,
+.trend-section,
+.stats-section,
+.tasks-section,
+.competitors-section,
+.your-price-section,
+.weather-container {
+  padding:14px !important;
+  margin:0 !important;
+  background:var(--surface) !important;
+}
+
+/* First visible metric panels should feel like cards, not page sections. */
+.metric-tile,
+.metric-card,
+.stat-card,
+.summary-card,
+.breakdown-card,
+.category-item,
+.store-card,
+.content-block,
+.info-box,
+.debug-section,
+.failure-card,
+.insight-card,
+.example-card,
+.playbook-item,
+.action-card,
+.competitor-row,
+.task-item {
+  background:var(--surface) !important;
+  border:2px solid var(--border) !important;
+  padding:14px !important;
+}
+
+/* Values */
+.metric-value,
+.stat-value,
+.summary-value,
+.problem-value,
+.impact-value,
+.impact-stat,
+.benchmark-stat,
+.store-score,
+.gap-stat,
+.insight-stat,
+.comparison-value,
+.score-value,
+.nps-value,
+.breakdown-percent,
+.trend-value,
+.category-score,
+.info-value,
+.issue-count,
+.your-price-value,
+.actual-value,
+.target-value {
+  font-family:'Inter', sans-serif !important;
+  font-weight:800 !important;
+  letter-spacing:-1.5px !important;
+  text-shadow:none !important;
+  line-height:1 !important;
+}
+
+.metric-value.success,
+.stat-value.success,
+.success,
+.green,
+.good,
+.count-green,
+.change-positive,
+.trend-up { color:var(--green) !important; }
+.metric-value.warning,
+.warning,
+.amber,
+.count-amber { color:var(--amber) !important; }
+.metric-value.critical,
+.critical,
+.bad,
+.count-red,
+.change-negative,
+.trend-down { color:var(--red) !important; }
+.metric-value.blue,
+.metric-value.purple,
+.neutral,
+.count-navy { color:var(--wj-navy) !important; }
+
+/* Labels */
+.section-label,
+.section-title,
+.breakdown-title,
+.problem-title,
+.examples-title,
+.plan-title,
+.playbook-title,
+.insight-title,
+.tasks-title,
+.block-title,
+.action-priority,
+.comparison-title,
+.debug-title,
+.failure-title,
+.action-title,
+.score-label,
+.nps-label,
+.metric-label,
+.stat-label,
+.summary-label,
+.breakdown-label,
+.issue-label,
+.your-price-label {
+  font-family:'Inter', sans-serif !important;
+  font-size:11px !important;
+  font-weight:800 !important;
+  color:var(--text-sec) !important;
+  text-transform:uppercase !important;
+  letter-spacing:.8px !important;
+}
+
+/* Semantic backgrounds */
+.promoters,
+.pass,
+.comparison-side.high { background:var(--green-bg) !important; border-color:var(--green) !important; }
+.passives { background:var(--amber-bg) !important; border-color:var(--amber) !important; }
+.detractors,
+.fail,
+.comparison-side.low,
+.failures-section,
+.gap-callout { background:var(--red-bg) !important; border-color:var(--red) !important; }
+
+/* Progress bars */
+.progress-bar,
+.performance-bar { background:var(--surface-alt) !important; border-radius:8px !important; overflow:hidden !important; }
+.progress-fill,
+.bar-fill { background:var(--wj-teal) !important; }
+.progress-fill.bad { background:var(--red) !important; }
+.progress-fill.good { background:var(--green) !important; }
+
+/* Responsive grid behavior */
+.metrics-grid,
+.metric-grid,
+.stat-grid,
+.problem-grid,
+.example-grid,
+.section-grid,
+.store-grid,
+.breakdown-grid,
+.summary-grid,
+.trend-grid {
+  gap:10px !important;
+}
+
+@media (max-width:480px) {
+  .metrics-section,
+  .content-section,
+  .breakdown-section,
+  .actions,
+  .impact-hero,
+  .benchmark-hero,
+  .store-grid,
+  .playbook-section,
+  .task-breakdown,
+  .insight-box,
+  .problem-section,
+  .examples-section,
+  .recovery-plan,
+  .summary-section,
+  .stores-section,
+  .action-section,
+  .nps-score-section,
+  .score-section,
+  .categories-section,
+  .failures-section,
+  .action-items,
+  .insights-section,
+  .trend-section,
+  .stats-section,
+  .tasks-section,
+  .competitors-section,
+  .your-price-section,
+  .weather-container {
+    padding:12px !important;
+  }
+  .metrics-grid,
+  .metric-grid,
+  .stat-grid,
+  .problem-grid,
+  .example-grid,
+  .section-grid,
+  .summary-grid,
+  .breakdown-grid,
+  .trend-grid {
+    grid-template-columns:1fr !important;
+  }
+  .comparison { grid-template-columns:1fr !important; }
+}
+
+.header-icon{display:none!important}.weather-widget{background:var(--surface)!important}.weather-embed{box-shadow:none!important;border-radius:var(--radius)!important}
+</style>
 </head>
 <body>
     <div class="weather-widget">
