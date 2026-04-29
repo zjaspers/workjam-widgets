@@ -1,0 +1,1 @@
+Upload all files in this folder to the same GitHub Pages folder. Each widget is standalone and responsive from 220px to 900px. Use direct HTTPS URLs in WorkJam. Add WorkJam URL parameters such as ?aspectRatio=landscape if needed.
