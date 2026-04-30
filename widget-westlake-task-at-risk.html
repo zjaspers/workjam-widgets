@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Westlake Task At Risk</title>
+<style>
+:root{--accent:#C3A427;--navy:#2B3990;--text:#1A1A2E;--text-sec:#4B5373;--border:#E2E7F0;--bg:#F8FAFC}
+*{box-sizing:border-box;margin:0;padding:0}html,body{min-width:220px;max-width:900px;width:100%;margin:0;padding:0;overflow-x:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:transparent;padding:8px 4px}
+.card{width:100%;background:white;border:1px solid var(--border);border-left:5px solid var(--accent);border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(43,57,144,.06)}
+.card-top{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.info h3{font-size:15px;font-weight:800;letter-spacing:-.3px;color:var(--text)}.info p{font-size:11px;color:var(--text-sec);margin-top:2px;font-weight:600}
+.score{text-align:right;flex-shrink:0}.score-val{font-size:20px;font-weight:800;color:var(--accent);line-height:1}.score-lbl{font-size:9px;font-weight:800;text-transform:uppercase;color:var(--text-sec);display:block;margin-top:2px}
+.bar{background:#F1F5F9;padding:8px 16px;display:flex;justify-content:space-between;gap:10px;font-size:10px;font-weight:700;border-top:1px solid var(--border)}.risk-text{color:var(--accent)}
+.actions{padding:10px;background:var(--bg);display:flex;gap:8px}.btn{flex:1;padding:10px;border-radius:8px;border:1px solid var(--border);background:white;font-size:10px;font-weight:800;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text)}.btn.primary{background:var(--navy);color:white;border:none}
+#toast{position:fixed;bottom:10px;left:10px;right:10px;background:var(--text);color:white;padding:12px;border-radius:8px;font-size:11px;font-weight:700;transform:translateY(200%);transition:.3s;z-index:99;text-align:center}#toast.show{transform:translateY(0)}
+</style></head>
+<body><div class="card"><div class="card-top"><div class="info"><h3>Westlake - Task At Risk</h3><p>8 Overdue • Staffing Gap</p></div><div class="score"><span class="score-val">3.1</span><span class="score-lbl">CSAT</span></div></div><div class="bar"><span>Staffing Index: 74%</span><span class="risk-text">Status: Action Needed</span></div><div class="actions"><button class="btn primary" onclick="act('Westlake', 'Audit')">Launch Audit</button><button class="btn" onclick="act('Westlake', 'Nudge')">Nudge Manager</button></div></div><div id="toast">Launching...</div>
+<script>function act(s,t){const toast=document.getElementById('toast');toast.innerText=t==='Audit'?`✓ Pivoting to WorkJam Audit for ${s}...`:`Nudge sent to Store Manager.`;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),3000);}</script></body></html>
