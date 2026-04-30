@@ -30,45 +30,10 @@
             line-height: 1.4;
             padding: 0;
             margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll on iPad */
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* Command Strip Header */
-        .command-header {
-            background: var(--navy);
-            color: white;
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .command-title {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
-
-        .ai-status-pill {
-            background: rgba(255,255,255,0.15);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .pulse-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--green);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        /* AI Prediction Bar */
+        /* AI Prediction Bar - Now the start of the widget */
         .ai-story-bar {
             background: var(--surface);
             padding: 16px;
@@ -179,7 +144,7 @@
             border-top: 1px solid var(--border);
         }
 
-        /* The "Native WorkJam" Action Layer */
+        /* Action Layer */
         .action-layer {
             padding: 12px;
             background: var(--surface-alt);
@@ -217,24 +182,16 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
         }
 
-        /* IPAD & TABLET OPTIMIZATIONS */
+        /* Responsive Adjustments */
         @media (max-width: 1024px) {
             .kpi-val { font-size: 20px; }
             .ai-text { font-size: 12px; }
         }
 
         @media (max-width: 768px) {
-            .kpi-row { grid-template-columns: repeat(3, 1fr); }
             .correlation-bar { font-size: 10px; padding: 8px 12px; }
             .store-info h3 { font-size: 14px; }
             .wj-action-btn { font-size: 9px; padding: 8px 2px; }
-        }
-
-        /* Mobile specific font sizing */
-        @media (max-width: 480px) {
-            .kpi-val { font-size: 18px; }
-            .command-title { font-size: 16px; }
-            .ai-story-bar { padding: 12px; }
         }
 
         #toast {
@@ -250,16 +207,7 @@
 </head>
 <body>
 
-    <!-- 1. HEADER: Command Strip -->
-    <header class="command-header">
-        <div class="command-title">At-Risk Stores</div>
-        <div class="ai-status-pill">
-            <div class="pulse-dot"></div>
-            Intelligence Engine Active
-        </div>
-    </header>
-
-    <!-- 2. AI STORY -->
+    <!-- AI STORY STRIP - Replaces Header -->
     <div class="ai-story-bar">
         <div class="ai-icon-hex">🎯</div>
         <div class="ai-text">
@@ -267,7 +215,7 @@
         </div>
     </div>
 
-    <!-- 3. KPI GRID -->
+    <!-- KPI GRID -->
     <div class="kpi-row">
         <div class="kpi-tile">
             <span class="kpi-val" style="color:var(--red)">3</span>
@@ -283,14 +231,14 @@
         </div>
     </div>
 
-    <!-- 4. ACTION CENTER -->
+    <!-- ACTION CENTER -->
     <div class="list-container">
         <div class="list-subhead">
             <span>Intervention Priority</span>
             <span>Impact Target</span>
         </div>
 
-        <!-- Store Card: Easton (Merchandising Focus) -->
+        <!-- Easton -->
         <div class="store-card" style="border-left: 4px solid var(--red);">
             <div class="card-top">
                 <div class="store-info">
@@ -316,7 +264,7 @@
             </div>
         </div>
 
-        <!-- Store Card: Polaris -->
+        <!-- Polaris -->
         <div class="store-card" style="border-left: 4px solid var(--red);">
             <div class="card-top">
                 <div class="store-info">
@@ -342,7 +290,7 @@
             </div>
         </div>
 
-        <!-- Store Card: Westlake -->
+        <!-- Westlake -->
         <div class="store-card" style="border-left: 4px solid var(--gold);">
             <div class="card-top">
                 <div class="store-info">
