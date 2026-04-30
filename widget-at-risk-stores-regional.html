@@ -11,7 +11,6 @@
             --red: #C0392B;
             --red-bg: #FAD4D0;
             --navy: #2B3990;
-            --navy-light: #DDE2F4;
             --text-main: #1A1A2E;
             --text-sec: #4B5373;
             --border: #E2E7F0;
@@ -27,44 +26,44 @@
             font-family: 'Inter', -apple-system, sans-serif;
             background: #F2F4F8;
             color: var(--text-main);
-            line-height: 1.4;
-            padding: 0;
+            line-height: 1.3;
+            padding: 8px 0 0 0; /* Buffer at top to prevent clipping */
             margin: 0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
 
-        /* AI Prediction Bar - Now the start of the widget */
+        /* High Density AI Story Bar */
         .ai-story-bar {
             background: var(--surface);
-            padding: 16px;
+            padding: 10px 16px;
             border-bottom: 1px solid var(--border);
             display: flex;
-            gap: 12px;
-            align-items: flex-start;
+            gap: 10px;
+            align-items: center;
         }
 
         .ai-icon-hex {
             background: var(--red-bg);
             color: var(--red);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 14px;
             flex-shrink: 0;
         }
 
         .ai-text {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--text-sec);
         }
 
-        .ai-text span { color: var(--red); font-weight: 900; }
+        .ai-text span { color: var(--red); font-weight: 800; }
 
-        /* KPI Dashboard Row */
+        /* Compact KPI Row */
         .kpi-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -75,35 +74,36 @@
 
         .kpi-tile {
             background: white;
-            padding: 14px 8px;
+            padding: 10px 4px;
             text-align: center;
         }
 
         .kpi-val {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 800;
             display: block;
-            margin-bottom: 2px;
+            line-height: 1;
         }
 
         .kpi-label {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 800;
             color: var(--text-sec);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
         }
 
-        /* Intervention List */
-        .list-container { padding: 16px; }
+        /* Compact Intervention List */
+        .list-container { padding: 12px 16px; }
         
         .list-subhead {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 900;
             color: var(--text-sec);
             text-transform: uppercase;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
         }
@@ -111,95 +111,79 @@
         .store-card {
             background: white;
             border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            margin-bottom: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
 
         .card-top {
-            padding: 16px;
+            padding: 10px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .store-info { flex: 1; min-width: 0; }
-        .store-info h3 { font-size: 15px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .store-info p { font-size: 12px; color: var(--text-sec); margin-top: 2px; }
+        .store-info h3 { font-size: 14px; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .store-info p { font-size: 11px; color: var(--text-sec); margin-top: 1px; }
 
         .score-box { text-align: right; flex-shrink: 0; }
-        .score-val { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 800; line-height: 1; }
-        .score-lbl { font-size: 9px; font-weight: 800; text-transform: uppercase; color: var(--text-sec); display: block; margin-top: 2px; }
+        .score-val { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 800; line-height: 1; }
+        .score-lbl { font-size: 8px; font-weight: 800; text-transform: uppercase; color: var(--text-sec); display: block; }
 
-        /* Correlation Bar */
+        /* Slim Correlation Bar */
         .correlation-bar {
             background: #F1F5F9;
-            padding: 8px 16px;
+            padding: 6px 12px;
             display: flex;
             justify-content: space-between;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             border-top: 1px solid var(--border);
         }
 
-        /* Action Layer */
+        /* Dense Action Layer */
         .action-layer {
-            padding: 12px;
+            padding: 8px;
             background: var(--surface-alt);
             display: flex;
-            gap: 8px;
+            gap: 6px;
         }
 
         .wj-action-btn {
             flex: 1;
-            padding: 10px 4px;
-            border-radius: 8px;
+            padding: 8px 4px;
+            border-radius: 6px;
             border: 1px solid var(--border);
             background: white;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
             text-transform: uppercase;
             cursor: pointer;
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 4px;
             transition: all 0.2s;
-            min-width: 0;
         }
 
-        .wj-action-btn:hover { border-color: var(--navy); color: var(--navy); background: #f0f3ff; }
         .wj-action-btn.primary { background: var(--navy); color: white; border: none; }
-        .wj-action-btn.primary:hover { background: #1e2a70; }
+        .btn-icon { font-size: 12px; }
 
-        .btn-icon { font-size: 14px; }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.3); }
-            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(39, 174, 96, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
-        }
-
-        /* Responsive Adjustments */
+        /* Tablet specific scaling to ensure Polaris fits */
         @media (max-width: 1024px) {
-            .kpi-val { font-size: 20px; }
-            .ai-text { font-size: 12px; }
-        }
-
-        @media (max-width: 768px) {
-            .correlation-bar { font-size: 10px; padding: 8px 12px; }
-            .store-info h3 { font-size: 14px; }
-            .wj-action-btn { font-size: 9px; padding: 8px 2px; }
+            .list-container { padding: 8px 12px; }
+            .store-card { margin-bottom: 6px; }
+            .kpi-tile { padding: 8px 2px; }
         }
 
         #toast {
             position: fixed; bottom: 20px; left: 16px; right: 16px;
-            background: #1A1A2E; color: white; padding: 16px;
-            border-radius: 12px; font-size: 13px; font-weight: 700;
+            background: #1A1A2E; color: white; padding: 14px;
+            border-radius: 10px; font-size: 12px; font-weight: 700;
             transform: translateY(150%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             z-index: 1000;
         }
         #toast.show { transform: translateY(0); }
@@ -207,15 +191,15 @@
 </head>
 <body>
 
-    <!-- AI STORY STRIP - Replaces Header -->
+    <!-- COMPACT AI STORY STRIP -->
     <div class="ai-story-bar">
         <div class="ai-icon-hex">🎯</div>
         <div class="ai-text">
-            <span>Critical Gaps Detected:</span> Poor <span>Merchandising execution</span> at Easton is driving a <span>-15% CSAT drop</span>. Predictive analysis indicates a loss of high-margin traffic if visual standards aren't reset.
+            <span>Critical Gaps:</span> Merchandising at Easton driving <span>-15% CSAT drop</span>. Address standards now to protect weekend revenue.
         </div>
     </div>
 
-    <!-- KPI GRID -->
+    <!-- COMPACT KPI GRID -->
     <div class="kpi-row">
         <div class="kpi-tile">
             <span class="kpi-val" style="color:var(--red)">3</span>
@@ -227,112 +211,106 @@
         </div>
         <div class="kpi-tile">
             <span class="kpi-val">84%</span>
-            <span class="kpi-label">Health Index</span>
+            <span class="kpi-label">Health</span>
         </div>
     </div>
 
-    <!-- ACTION CENTER -->
+    <!-- HIGH DENSITY ACTION CENTER -->
     <div class="list-container">
         <div class="list-subhead">
-            <span>Intervention Priority</span>
-            <span>Impact Target</span>
+            <span>Prioritized Interventions</span>
+            <span>Target</span>
         </div>
 
         <!-- Easton -->
-        <div class="store-card" style="border-left: 4px solid var(--red);">
+        <div class="store-card" style="border-left: 3px solid var(--red);">
             <div class="card-top">
                 <div class="store-info">
                     <h3>#30110 - Easton</h3>
-                    <p>6 Overdue Tasks • Merchandising Failure</p>
+                    <p>6 Overdue • Merch Failure</p>
                 </div>
                 <div class="score-box">
                     <span class="score-val" style="color:var(--red)">2.4</span>
-                    <span class="score-lbl">CSAT Score</span>
+                    <span class="score-lbl">CSAT</span>
                 </div>
             </div>
             <div class="correlation-bar">
-                <span>Visual Execution: -35%</span>
-                <span style="color:var(--red)">Revenue Leak: High</span>
+                <span>Visual: -35%</span>
+                <span style="color:var(--red)">Leak: High</span>
             </div>
             <div class="action-layer">
                 <button class="wj-action-btn primary" onclick="wjAction('Easton', 'Audit')">
-                    <span class="btn-icon">📋</span> Launch Merch Audit
+                    <span class="btn-icon">📋</span> Audit
                 </button>
                 <button class="wj-action-btn" onclick="wjAction('Easton', 'Nudge')">
-                    <span class="btn-icon">💬</span> Nudge Mgr
+                    <span class="btn-icon">💬</span> Nudge
                 </button>
             </div>
         </div>
 
         <!-- Polaris -->
-        <div class="store-card" style="border-left: 4px solid var(--red);">
+        <div class="store-card" style="border-left: 3px solid var(--red);">
             <div class="card-top">
                 <div class="store-info">
                     <h3>#30444 - Polaris</h3>
-                    <p>7 Overdue Tasks • Stocking Backlog</p>
+                    <p>7 Overdue • Stocking Backlog</p>
                 </div>
                 <div class="score-box">
                     <span class="score-val" style="color:var(--red)">2.8</span>
-                    <span class="score-lbl">CSAT Score</span>
+                    <span class="score-lbl">CSAT</span>
                 </div>
             </div>
             <div class="correlation-bar">
-                <span>Process Execution: -22%</span>
-                <span style="color:var(--red)">Predicted Loss: -$1.2k</span>
+                <span>Process: -22%</span>
+                <span style="color:var(--red)">Risk: -$1.2k</span>
             </div>
             <div class="action-layer">
                 <button class="wj-action-btn primary" onclick="wjAction('Polaris', 'Audit')">
-                    <span class="btn-icon">📋</span> Launch Audit
+                    <span class="btn-icon">📋</span> Audit
                 </button>
                 <button class="wj-action-btn" onclick="wjAction('Polaris', 'Nudge')">
-                    <span class="btn-icon">💬</span> Nudge Mgr
+                    <span class="btn-icon">💬</span> Nudge
                 </button>
             </div>
         </div>
 
         <!-- Westlake -->
-        <div class="store-card" style="border-left: 4px solid var(--gold);">
+        <div class="store-card" style="border-left: 3px solid var(--gold);">
             <div class="card-top">
                 <div class="store-info">
                     <h3>#2103 - Westlake</h3>
-                    <p>8 Overdue Tasks • Staffing Shortfall</p>
+                    <p>8 Overdue • Staffing Gap</p>
                 </div>
                 <div class="score-box">
                     <span class="score-val" style="color:var(--gold)">3.1</span>
-                    <span class="score-lbl">CSAT Score</span>
+                    <span class="score-lbl">CSAT</span>
                 </div>
             </div>
             <div class="correlation-bar">
-                <span>Execution: -28%</span>
-                <span style="color:var(--gold)">Status: Action Needed</span>
+                <span>Exec: -28%</span>
+                <span style="color:var(--gold)">Monitor</span>
             </div>
             <div class="action-layer">
                 <button class="wj-action-btn primary" onclick="wjAction('Westlake', 'Audit')">
-                    <span class="btn-icon">📋</span> Launch Audit
+                    <span class="btn-icon">📋</span> Audit
                 </button>
                 <button class="wj-action-btn" onclick="wjAction('Westlake', 'Nudge')">
-                    <span class="btn-icon">💬</span> Nudge Mgr
+                    <span class="btn-icon">💬</span> Nudge
                 </button>
             </div>
         </div>
     </div>
 
-    <div id="toast">Launching WorkJam Audit Module...</div>
+    <div id="toast">Launching...</div>
 
     <script>
         function wjAction(store, type) {
             const toast = document.getElementById('toast');
-            
-            if(type === 'Audit') {
-                toast.innerHTML = `<span style="color:var(--green)">✓</span> Pivoting to <strong>WorkJam Audit Module</strong> for ${store}...`;
-            } else if(type === 'Nudge') {
-                toast.innerHTML = `AI Drafted Message sent to ${store} Manager via WorkJam Chat.`;
-            } else {
-                toast.innerHTML = `Initiating WorkJam Orchestration: ${type} for ${store}`;
-            }
-
+            toast.innerHTML = type === 'Audit' 
+                ? `✓ Pivoting to <strong>Audit</strong> for ${store}...` 
+                : `Nudge sent to ${store} Manager.`;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3500);
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
     </script>
 </body>
