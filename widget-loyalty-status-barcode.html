@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Loyalty Status Barcode</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap');
+        :root {
+            --wj-gold: #C3A427; --wj-gold-bg: #FDF3CE; --navy: #2B3990; --text: #1A1A2E;
+            --text-sec: #4B5373; --border: #E2E7F0; --surface: #FFFFFF;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html,body{min-width:220px;max-width:900px;width:100%;height:100%;margin:0;padding:0;overflow:hidden} body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;background:transparent;color:var(--text);line-height:1.3;padding:0;margin:0;display:flex;}
+        .ai-story-bar {
+            background: var(--surface); padding: 12px 16px; border-bottom: 1px solid var(--border);
+            display: flex; gap: 12px; align-items: center; border-radius: 12px 12px 0 0; border: 1px solid var(--border); border-bottom: none;
+        }
+        .ai-icon {
+            background: var(--wj-gold-bg); color: var(--wj-gold); width: 32px; height: 32px;
+            border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+        }
+        .ai-text { font-size: 12px; font-weight: 700; color: var(--text-sec); }
+        .ai-text span { color: var(--wj-gold); font-weight: 900; }
+        
+        .loyalty-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+            background: var(--border); border: 1px solid var(--border); border-radius: 0 0 12px 12px; overflow: hidden;
+        }
+        .stat-tile { background: white; padding: 14px; text-align: left; position: relative; }
+        .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 800; display: block; line-height: 1; color: var(--navy); }
+        .stat-label { font-size: 8px; font-weight: 800; color: var(--text-sec); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+        
+        .barcode-btn {
+            grid-column: 1 / -1; background: var(--navy); color: white; border: none;
+            padding: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .barcode-btn:hover { background: #1e2a70; }
+
+        /* Barcode Modal Overlay */
+        #barcode-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26,26,46,0.95); display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 1000;
+        }
+        #barcode-overlay.show { display: flex; }
+        .barcode-container { background: white; padding: 20px; border-radius: 12px; text-align: center; }
+        .barcode-id { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text-sec); }
+        .close-btn { margin-top: 20px; color: white; background: transparent; border: 1px solid white; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: 700; }
+    
+html,body{min-width:220px;max-width:900px;width:100%;height:100%;margin:0;padding:0;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:transparent;color:var(--text);line-height:1.3;padding:0;margin:0;display:flex}
+body > .ai-story-bar{border-radius:0}
+body > .ai-story-bar, body > .loyalty-grid{width:100%}
+body{flex-direction:column}
+.loyalty-grid{flex:1;min-height:0}
+@media(max-height:170px){.ai-story-bar{padding:8px 10px}.ai-icon{width:26px;height:26px}.ai-text{font-size:10.5px}.stat-tile{padding:9px}.stat-val{font-size:18px}.barcode-btn{padding:8px}}
+</style>
+</head>
+<body>
+    <div class="ai-story-bar">
+        <div class="ai-icon">🏆</div>
+        <div class="ai-text">
+            <span>Level Up:</span> You are only <span>450 points</span> away from <strong>Platinum Status</strong>. Earn double points on all private-label sales this weekend.
+        </div>
+    </div>
+    <div class="loyalty-grid">
+        <div class="stat-tile">
+            <span class="stat-val">12,550</span>
+            <span class="stat-label">Total Points</span>
+        </div>
+        <div class="stat-tile">
+            <span class="stat-val" style="color:var(--wj-gold)">GOLD</span>
+            <span class="stat-label">Current Tier</span>
+        </div>
+        <button class="barcode-btn" onclick="toggleBarcode()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 5v14M7 5v14M11 5v14M15 5v14M19 5v14M21 5v14M5 5v14M9 5v14M13 5v14M17 5v14"></path></svg>
+            Show My Scan Code
+        </button>
+    </div>
+
+    <!-- Modal for scanning -->
+    <div id="barcode-overlay" onclick="toggleBarcode()">
+        <div class="barcode-container" onclick="event.stopPropagation()">
+            <svg width="240" height="80" viewBox="0 0 100 40">
+                <!-- Mock Barcode SVG -->
+                <rect x="0" y="0" width="2" height="40" fill="black"/>
+                <rect x="4" y="0" width="1" height="40" fill="black"/>
+                <rect x="7" y="0" width="3" height="40" fill="black"/>
+                <rect x="12" y="0" width="2" height="40" fill="black"/>
+                <rect x="16" y="0" width="1" height="40" fill="black"/>
+                <rect x="20" y="0" width="4" height="40" fill="black"/>
+                <rect x="26" y="0" width="2" height="40" fill="black"/>
+                <rect x="30" y="0" width="1" height="40" fill="black"/>
+                <rect x="33" y="0" width="2" height="40" fill="black"/>
+                <rect x="38" y="0" width="3" height="40" fill="black"/>
+                <rect x="43" y="0" width="1" height="40" fill="black"/>
+                <rect x="46" y="0" width="4" height="40" fill="black"/>
+                <rect x="52" y="0" width="2" height="40" fill="black"/>
+                <rect x="56" y="0" width="1" height="40" fill="black"/>
+                <rect x="60" y="0" width="3" height="40" fill="black"/>
+                <rect x="65" y="0" width="2" height="40" fill="black"/>
+                <rect x="70" y="0" width="1" height="40" fill="black"/>
+                <rect x="74" y="0" width="4" height="40" fill="black"/>
+                <rect x="80" y="0" width="2" height="40" fill="black"/>
+                <rect x="85" y="0" width="1" height="40" fill="black"/>
+                <rect x="89" y="0" width="3" height="40" fill="black"/>
+                <rect x="94" y="0" width="2" height="40" fill="black"/>
+                <rect x="98" y="0" width="2" height="40" fill="black"/>
+            </svg>
+            <div class="barcode-id">EMP-884-9021</div>
+        </div>
+        <button class="close-btn">Tap anywhere to close</button>
+    </div>
+
+    <script>
+        function toggleBarcode() {
+            document.getElementById('barcode-overlay').classList.toggle('show');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Sales Accelerator</title>
+<style>
+:root{--teal:#07A387;--teal-bg:#D0F0EA;--navy:#2B3990;--text:#1A1A2E;--text-sec:#4B5373;--border:#E2E7F0;--surface:#FFFFFF}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-width:220px;max-width:900px;width:100%;height:100%;margin:0;padding:0;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:transparent;color:var(--text);line-height:1.3;display:flex}
+.widget{width:100%;height:100vh;min-height:100%;display:flex;flex-direction:column;background:white;border:1px solid var(--border);border-radius:0;overflow:hidden}
+.ai-story-bar{background:var(--surface);padding:12px 16px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center;flex-shrink:0}
+.ai-icon{background:var(--teal-bg);color:var(--teal);width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ai-text{font-size:12px;font-weight:700;color:var(--text-sec)}
+.ai-text span{color:var(--teal);font-weight:900}
+.personal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);flex:1;min-height:0}
+.stat-tile{background:white;padding:14px;text-align:left;display:flex;flex-direction:column;justify-content:center;min-height:0}
+.stat-val{font-size:22px;font-weight:800;display:block;line-height:1;color:var(--navy)}
+.stat-label{font-size:8px;font-weight:800;color:var(--text-sec);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.progress-container{margin-top:8px;background:#eee;height:4px;border-radius:2px}
+.progress-bar{background:var(--teal);height:100%;border-radius:2px}
+@media(max-height:170px){.ai-story-bar{padding:8px 10px}.ai-icon{width:26px;height:26px}.ai-text{font-size:10.5px}.stat-tile{padding:9px}.stat-val{font-size:18px}.stat-label{font-size:7px}}
+</style>
+</head>
+<body>
+<div class="widget">
+  <div class="ai-story-bar">
+    <div class="ai-icon">🚀</div>
+    <div class="ai-text"><span>Peak Performance:</span> You're at <span>92% of Goal</span>. Selling 2 more accessories today will trigger your <span>Daily Accelerator Bonus</span> of +$15.</div>
+  </div>
+  <div class="personal-grid">
+    <div class="stat-tile"><span class="stat-val">$1,385</span><span class="stat-label">Daily Sales ($1,500)</span><div class="progress-container"><div class="progress-bar" style="width:92%"></div></div></div>
+    <div class="stat-tile"><span class="stat-val">2.4</span><span class="stat-label">UPT (Avg: 1.8)</span><div class="progress-container"><div class="progress-bar" style="width:100%;background:#27AE60"></div></div></div>
+    <div class="stat-tile"><span class="stat-val">14%</span><span class="stat-label">Conversion Rate</span></div>
+    <div class="stat-tile" style="background:#F0F9F8"><span class="stat-val" style="color:var(--teal)">+$42.50</span><span class="stat-label">Est. Wkly Commission</span></div>
+  </div>
+</div>
+</body>
+</html>
