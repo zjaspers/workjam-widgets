@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap');
+        
+        :root {
+            --stripe-blue: #635bff;
+            --stripe-blue-hover: #5851ea;
+            --text-dark: #1a1f36;
+            --text-muted: #4f566b;
+            --border: #e3e8ee;
+            --danger: #df1b41;
+            --danger-bg: #fff1f2;
+            --success: #00875a;
+            --success-bg: #e3fcef;
+            --white: #ffffff;
+            --bg-page: #f7fafc;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: transparent;
+            color: var(--text-dark);
+            line-height: 1.3;
+            padding: 4px; /* Tight padding for WorkJam frame */
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Predictive AI Bar */
+        .ai-banner {
+            background: #f6f9fc;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .ai-icon { font-size: 18px; }
+        .ai-label { font-size: 9px; font-weight: 800; color: var(--stripe-blue); text-transform: uppercase; margin-bottom: 2px; display: block; }
+        .ai-message { font-size: 12px; color: var(--text-muted); font-weight: 500; flex: 1; }
+        .ai-message strong { color: var(--text-dark); font-weight: 700; }
+
+        /* Sync Status Strip */
+        .sync-strip {
+            padding: 6px 16px;
+            background: #ffffff;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .live-tag {
+            font-size: 9px;
+            font-weight: 800;
+            color: var(--stripe-blue);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+        }
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--stripe-blue);
+            border-radius: 50%;
+            animation: pulse-ring 2s infinite;
+        }
+        .sync-time { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-muted); font-weight: 600; }
+
+        /* Sensor Grid */
+        .sensor-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+        }
+
+        .sensor-card { background: white; padding: 16px; }
+        .group-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px; display: block; letter-spacing: 0.3px; }
+
+        /* Progress Rows (Coffee) */
+        .data-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        .row-label { font-size: 11px; font-weight: 600; width: 45px; color: var(--text-dark); }
+        .track { flex: 1; height: 5px; background: #eef2f7; border-radius: 3px; overflow: hidden; }
+        .fill { height: 100%; background: var(--stripe-blue); transition: width 0.8s ease-out, background 0.3s; }
+        .val { font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; width: 30px; text-align: right; }
+
+        /* Temperature Style */
+        .temp-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+        .temp-val { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; }
+        .badge { font-size: 8px; font-weight: 800; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        .badge-success { background: var(--success-bg); color: var(--success); }
+        .badge-danger { background: var(--danger-bg); color: var(--danger); animation: pulse-red-border 1.5s infinite; }
+
+        /* HACCP Detail Section */
+        .haccp-detail {
+            padding: 14px 16px;
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+        }
+        .haccp-header { font-size: 10px; font-weight: 800; color: var(--text-dark); text-transform: uppercase; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .haccp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .haccp-box { border-left: 2px solid var(--border); padding-left: 8px; }
+        .haccp-title { font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 2px; }
+        .haccp-value { font-size: 11px; font-weight: 600; color: var(--text-dark); }
+
+        /* Action Footer */
+        .footer {
+            padding: 12px 16px;
+            background: #ffffff;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: all 0.15s;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            line-height: 1.2;
+        }
+
+        .btn-p { background: var(--stripe-blue); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .btn-p:hover { background: var(--stripe-blue-hover); }
+        .btn-s { background: white; color: var(--text-dark); border: 1px solid var(--border); text-align: center; }
+        .btn-s:hover { background: #f6f9fc; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 20px; left: 16px; right: 16px;
+            background: var(--text-dark); color: white; padding: 12px;
+            border-radius: 6px; font-size: 12px; font-weight: 600;
+            z-index: 1000; transform: translateY(150px); transition: transform 0.4s;
+            text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        #toast.show { transform: translateY(0); }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse-red-border { 
+            0% { box-shadow: 0 0 0 0 rgba(223, 27, 65, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(223, 27, 65, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(223, 27, 65, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-card">
+        <!-- AI INSIGHT BAR -->
+        <div class="ai-banner" id="ai-banner">
+            <div class="ai-icon" id="ai-icon">✨</div>
+            <div class="ai-message">
+                <span class="ai-label">Orchestration Signal</span>
+                <div id="ai-text">Analyzing sensor network...</div>
+            </div>
+        </div>
+
+        <!-- SYNC STATUS -->
+        <div class="sync-strip">
+            <div class="live-tag"><div class="pulse-dot"></div> Live Sensor Mesh</div>
+            <div class="sync-time" id="sync-time">Sync: 11:24:02</div>
+        </div>
+
+        <!-- SENSOR GRID -->
+        <div class="sensor-grid">
+            <!-- Coffee Section -->
+            <div class="sensor-card">
+                <span class="group-label">Brew Analytics</span>
+                <div class="data-row">
+                    <span class="row-label">Dark</span>
+                    <div class="track"><div id="fill-1" class="fill" style="width: 18%; background: var(--danger);"></div></div>
+                    <span id="val-1" class="val">18%</span>
+                </div>
+                <div class="data-row">
+                    <span class="row-label">House</span>
+                    <div class="track"><div id="fill-2" class="fill" style="width: 72%;"></div></div>
+                    <span id="val-2" class="val">72%</span>
+                </div>
+                <div class="data-row">
+                    <span class="row-label">Decaf</span>
+                    <div class="track"><div id="fill-3" class="fill" style="width: 54%;"></div></div>
+                    <span id="val-3" class="val">54%</span>
+                </div>
+            </div>
+
+            <!-- Food Safety Section -->
+            <div class="sensor-card">
+                <span class="group-label">Thermal Hold</span>
+                <div class="temp-row">
+                    <span class="row-label" style="width:auto;">Grill</span>
+                    <span id="temp-1" class="temp-val">142°F</span>
+                    <span class="badge badge-success">Safe</span>
+                </div>
+                <div class="temp-row">
+                    <span class="row-label" style="width:auto;">Case 1</span>
+                    <span id="temp-2" class="temp-val">138°F</span>
+                    <span class="badge badge-success">Safe</span>
+                </div>
+                <div class="temp-row">
+                    <span class="row-label" style="width:auto;">Case 2</span>
+                    <span id="temp-3" class="temp-val">134°F</span>
+                    <span class="badge badge-danger">Alert</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HACCP STANDARDS DETAIL -->
+        <div class="haccp-detail">
+            <div class="haccp-header">📋 HACCP Operational Standards</div>
+            <div class="haccp-grid">
+                <div class="haccp-box">
+                    <div class="haccp-title">Critical Limit</div>
+                    <div class="haccp-value">>135.0°F Hold</div>
+                </div>
+                <div class="haccp-box">
+                    <div class="haccp-title">Corrective Action</div>
+                    <div class="haccp-value">Auto-Dispatch Task</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTION FOOTER -->
+        <div class="footer">
+            <button class="btn btn-p" onclick="triggerTask('Coffee Brew')">Trigger Brew Cycle</button>
+            <button class="btn btn-s" onclick="triggerTask('Thermal Audit')">Temp audit automatically triggered at threshold</button>
+        </div>
+    </div>
+
+    <div id="toast">Dispatched...</div>
+
+    <script>
+        const state = {
+            coffee: [18, 72, 54],
+            temps: [142, 138, 134]
+        };
+
+        function update() {
+            const now = new Date();
+            document.getElementById('sync-time').innerText = `Sync: ${now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit', second:'2-digit'})}`;
+
+            let alertFound = false;
+            let alertMsg = "";
+            let icon = "✨";
+
+            // Update Temps (+/- jitter)
+            for(let i=1; i<=3; i++) {
+                const el = document.getElementById(`temp-${i}`);
+                const change = Math.random() > 0.5 ? 1 : -1;
+                const newVal = parseInt(el.innerText) + (Math.random() > 0.8 ? change : 0);
+                el.innerText = newVal + "°F";
+                
+                const badge = el.nextElementSibling;
+                if(newVal < 135) {
+                    badge.className = "badge badge-danger";
+                    badge.innerText = "Alert";
+                    alertFound = true;
+                    alertMsg = `<span>HACCP Warning:</span> <strong>Case #${i}</strong> dropped to ${newVal}°F. Corrective action required.`;
+                    icon = "🌡️";
+                } else {
+                    badge.className = "badge badge-success";
+                    badge.innerText = "Safe";
+                }
+            }
+
+            // Update Coffee (Slow drain)
+            for(let i=1; i<=3; i++) {
+                const fill = document.getElementById(`fill-${i}`);
+                const val = document.getElementById(`val-${i}`);
+                let current = parseFloat(val.innerText);
+                
+                if(i !== 1) { // Pot 1 stays low for demo
+                    current -= 0.05;
+                }
+                
+                if(current > 5) {
+                    fill.style.width = current + "%";
+                    val.innerText = Math.round(current) + "%";
+                    
+                    if(current < 20) {
+                        fill.style.background = "var(--danger)";
+                        if(!alertFound) {
+                            alertFound = true;
+                            alertMsg = `<span>Refill Required:</span> Coffee <strong>Pot #${i}</strong> is at ${Math.round(current)}%.`;
+                            icon = "☕";
+                        }
+                    } else {
+                        fill.style.background = "var(--stripe-blue)";
+                    }
+                }
+            }
+
+            const aiBar = document.getElementById('ai-banner');
+            const aiText = document.getElementById('ai-text');
+            const aiIcon = document.getElementById('ai-icon');
+
+            if(alertFound) {
+                aiBar.style.background = "var(--danger-bg)";
+                aiText.innerHTML = alertMsg;
+                aiIcon.innerText = icon;
+            } else {
+                aiBar.style.background = "#f6f9fc";
+                aiText.innerHTML = "<span>System Status:</span> All stations within normal operating parameters.";
+                aiIcon.innerText = "✨";
+            }
+        }
+
+        function triggerTask(type) {
+            const t = document.getElementById('toast');
+            t.innerHTML = `✓ <strong>WorkJam Action:</strong> ${type} assigned to available team member.`;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3500);
+        }
+
+        setInterval(update, 3000);
+        setTimeout(update, 300);
+    </script>
+</body>
+</html>
