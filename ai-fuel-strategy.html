@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Price Market Intelligence</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+            overflow-x: hidden;
+        }
+
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: #0a0e27;
+            border-radius: 0;
+            overflow: hidden;
+            padding-top: 8px;
+        }
+
+        /* MARKET ALERT BANNER */
+        .market-alert {
+            background: linear-gradient(90deg, #1a1f3a 0%, #0f1229 100%);
+            border-left: 3px solid #ef4444;
+            padding: 10px 16px;
+            margin: 0 0 1px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .alert-left {
+            flex: 1;
+        }
+
+        .alert-status {
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #ef4444;
+            margin-bottom: 4px;
+        }
+
+        .alert-message {
+            font-size: 12px;
+            font-weight: 600;
+            color: #e5e7eb;
+            line-height: 1.4;
+        }
+
+        .alert-impact {
+            font-family: 'JetBrains Mono', monospace;
+            color: #fbbf24;
+            font-weight: 700;
+        }
+
+        .alert-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+        }
+
+        .alert-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #ef4444;
+            letter-spacing: -0.5px;
+        }
+
+        .alert-label {
+            font-size: 9px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* HERO METRIC */
+        .hero-section {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%);
+            padding: 20px 16px 18px 16px;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .hero-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 14px;
+        }
+
+        .hero-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-timestamp {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .hero-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 64px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -3px;
+            margin-bottom: 12px;
+        }
+
+        .hero-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #ef4444;
+        }
+
+        .meta-dot.neutral {
+            background: #6b7280;
+        }
+
+        .meta-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9ca3af;
+        }
+
+        .meta-value {
+            font-family: 'JetBrains Mono', monospace;
+            color: #ef4444;
+            font-weight: 700;
+        }
+
+        .meta-value.neutral {
+            color: #d1d5db;
+        }
+
+        /* COMPETITOR TABLE */
+        .competitors-section {
+            background: #0a0e27;
+            padding: 0;
+        }
+
+        .section-header {
+            padding: 14px 16px 10px 16px;
+            background: #0f1229;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .competitor-table {
+            width: 100%;
+        }
+
+        .competitor-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid #1f2937;
+            align-items: center;
+            transition: background 0.15s ease;
+        }
+
+        .competitor-row:hover {
+            background: #0f1229;
+        }
+
+        .competitor-row.threat {
+            background: rgba(239, 68, 68, 0.05);
+            border-left: 2px solid #ef4444;
+        }
+
+        .competitor-name-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .competitor-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: #e5e7eb;
+        }
+
+        .competitor-distance {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .competitor-price-cell {
+            text-align: right;
+        }
+
+        .competitor-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .competitor-row.threat .competitor-price {
+            color: #ef4444;
+        }
+
+        .competitor-diff-cell {
+            text-align: right;
+            min-width: 60px;
+        }
+
+        .price-diff {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .price-diff.negative {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .price-diff.positive {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .competitor-update-cell {
+            text-align: right;
+        }
+
+        .competitor-update {
+            font-size: 10px;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        /* TREND CHART */
+        .trend-section {
+            background: #0f1229;
+            padding: 16px;
+            border-top: 1px solid #1f2937;
+        }
+
+        .trend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .trend-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .trend-stat {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .trend-stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .trend-stat-label {
+            font-size: 9px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .trend-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 100px;
+            gap: 4px;
+            padding-top: 12px;
+        }
+
+        .trend-bar {
+            flex: 1;
+            background: linear-gradient(to top, rgba(99, 102, 241, 0.8) 0%, rgba(99, 102, 241, 0.4) 100%);
+            border-radius: 3px 3px 0 0;
+            position: relative;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .trend-bar:hover {
+            background: linear-gradient(to top, rgba(99, 102, 241, 1) 0%, rgba(99, 102, 241, 0.6) 100%);
+            border-color: rgba(99, 102, 241, 0.8);
+        }
+
+        .trend-bar-label {
+            position: absolute;
+            bottom: -22px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 9px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .hero-value {
+                font-size: 52px;
+            }
+
+            .competitor-row {
+                grid-template-columns: 1fr auto;
+                gap: 8px;
+            }
+
+            .competitor-diff-cell,
+            .competitor-update-cell {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <!-- MARKET ALERT BANNER -->
+        <div class="market-alert">
+            <div class="alert-left">
+                <div class="alert-status">MARKET ALERT</div>
+                <div class="alert-message">
+                    Competitor undercut detected — Shell (0.4 mi). 
+                    Est. daily impact: <span class="alert-impact">-240 gal</span>
+                </div>
+            </div>
+            <div class="alert-right">
+                <div class="alert-value">-$0.03</div>
+                <div class="alert-label">DIFFERENTIAL</div>
+            </div>
+        </div>
+
+        <!-- HERO METRIC -->
+        <div class="hero-section">
+            <div class="hero-header">
+                <div class="hero-label">Current Price (Regular)</div>
+                <div class="hero-timestamp" id="timestamp">LIVE • 14:23:08</div>
+            </div>
+            <div class="hero-value" id="yourPrice">$3.32</div>
+            <div class="hero-meta">
+                <div class="meta-item">
+                    <div class="meta-dot"></div>
+                    <div class="meta-text">
+                        Position: <span class="meta-value" id="position">-$0.03</span>
+                    </div>
+                </div>
+                <div class="meta-item">
+                    <div class="meta-dot neutral"></div>
+                    <div class="meta-text">
+                        7d Avg: <span class="meta-value neutral">$3.30</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- COMPETITOR TABLE -->
+        <div class="competitors-section">
+            <div class="section-header">
+                <div class="section-title">MARKET COMPARISON • 2 MI RADIUS</div>
+            </div>
+            <div class="competitor-table">
+                <div class="competitor-row threat">
+                    <div class="competitor-name-cell">
+                        <div class="competitor-name">Shell</div>
+                        <div class="competitor-distance">0.4 mi • Main St</div>
+                    </div>
+                    <div class="competitor-price-cell">
+                        <div class="competitor-price" id="shell-price">$3.29</div>
+                    </div>
+                    <div class="competitor-diff-cell">
+                        <span class="price-diff negative">-$0.03</span>
+                    </div>
+                    <div class="competitor-update-cell">
+                        <div class="competitor-update" id="shell-update">8m ago</div>
+                    </div>
+                </div>
+
+                <div class="competitor-row">
+                    <div class="competitor-name-cell">
+                        <div class="competitor-name">Chevron</div>
+                        <div class="competitor-distance">0.8 mi • Oak Ave</div>
+                    </div>
+                    <div class="competitor-price-cell">
+                        <div class="competitor-price" id="chevron-price">$3.34</div>
+                    </div>
+                    <div class="competitor-diff-cell">
+                        <span class="price-diff positive">+$0.02</span>
+                    </div>
+                    <div class="competitor-update-cell">
+                        <div class="competitor-update" id="chevron-update">15m ago</div>
+                    </div>
+                </div>
+
+                <div class="competitor-row">
+                    <div class="competitor-name-cell">
+                        <div class="competitor-name">BP</div>
+                        <div class="competitor-distance">1.2 mi • Route 22</div>
+                    </div>
+                    <div class="competitor-price-cell">
+                        <div class="competitor-price" id="bp-price">$3.36</div>
+                    </div>
+                    <div class="competitor-diff-cell">
+                        <span class="price-diff positive">+$0.04</span>
+                    </div>
+                    <div class="competitor-update-cell">
+                        <div class="competitor-update" id="bp-update">42m ago</div>
+                    </div>
+                </div>
+
+                <div class="competitor-row threat">
+                    <div class="competitor-name-cell">
+                        <div class="competitor-name">Costco</div>
+                        <div class="competitor-distance">1.8 mi • Wholesale Club</div>
+                    </div>
+                    <div class="competitor-price-cell">
+                        <div class="competitor-price" id="costco-price">$3.22</div>
+                    </div>
+                    <div class="competitor-diff-cell">
+                        <span class="price-diff negative">-$0.10</span>
+                    </div>
+                    <div class="competitor-update-cell">
+                        <div class="competitor-update" id="costco-update">12m ago</div>
+                    </div>
+                </div>
+
+                <div class="competitor-row">
+                    <div class="competitor-name-cell">
+                        <div class="competitor-name">Mobil</div>
+                        <div class="competitor-distance">1.9 mi • Highway 101</div>
+                    </div>
+                    <div class="competitor-price-cell">
+                        <div class="competitor-price">$3.38</div>
+                    </div>
+                    <div class="competitor-diff-cell">
+                        <span class="price-diff positive">+$0.06</span>
+                    </div>
+                    <div class="competitor-update-cell">
+                        <div class="competitor-update">1h ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TREND CHART -->
+        <div class="trend-section">
+            <div class="trend-header">
+                <div class="section-title">7-DAY TREND</div>
+                <div class="trend-stats">
+                    <div class="trend-stat">
+                        <div class="trend-stat-value">$3.27</div>
+                        <div class="trend-stat-label">Low</div>
+                    </div>
+                    <div class="trend-stat">
+                        <div class="trend-stat-value">$3.35</div>
+                        <div class="trend-stat-label">High</div>
+                    </div>
+                </div>
+            </div>
+            <div class="trend-chart">
+                <div class="trend-bar" style="height: 70%;">
+                    <div class="trend-bar-label" id="day1"></div>
+                </div>
+                <div class="trend-bar" style="height: 62%;">
+                    <div class="trend-bar-label" id="day2"></div>
+                </div>
+                <div class="trend-bar" style="height: 68%;">
+                    <div class="trend-bar-label" id="day3"></div>
+                </div>
+                <div class="trend-bar" style="height: 78%;">
+                    <div class="trend-bar-label" id="day4"></div>
+                </div>
+                <div class="trend-bar" style="height: 85%;">
+                    <div class="trend-bar-label" id="day5"></div>
+                </div>
+                <div class="trend-bar" style="height: 92%;">
+                    <div class="trend-bar-label" id="day6"></div>
+                </div>
+                <div class="trend-bar" style="height: 100%;">
+                    <div class="trend-bar-label">NOW</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // LIVE TIMESTAMP
+        function updateTimestamp() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('timestamp').textContent = `LIVE • ${hours}:${minutes}:${seconds}`;
+        }
+        
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+
+        // DYNAMIC DATES
+        function getDayLabel(daysAgo) {
+            const date = new Date();
+            date.setDate(date.getDate() - daysAgo);
+            const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            return days[date.getDay()];
+        }
+
+        document.getElementById('day1').textContent = getDayLabel(6);
+        document.getElementById('day2').textContent = getDayLabel(5);
+        document.getElementById('day3').textContent = getDayLabel(4);
+        document.getElementById('day4').textContent = getDayLabel(3);
+        document.getElementById('day5').textContent = getDayLabel(2);
+        document.getElementById('day6').textContent = getDayLabel(1);
+
+        // SENSOR SIMULATION (PRICE JITTER)
+        let basePrice = 3.32;
+
+        function simulatePriceJitter() {
+            // Add slight random fluctuation
+            const jitter = (Math.random() - 0.5) * 0.02;
+            const newPrice = Math.max(3.25, Math.min(3.40, basePrice + jitter));
+            
+            document.getElementById('yourPrice').textContent = '$' + newPrice.toFixed(2);
+        }
+
+        // Update every 15 seconds
+        setInterval(simulatePriceJitter, 15000);
+    </script>
+</body>
+</html>
