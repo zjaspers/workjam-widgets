@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap');
+        
+        :root {
+            --stripe-blue: #635bff;
+            --stripe-blue-hover: #5851ea;
+            --text-dark: #1a1f36;
+            --text-muted: #4f566b;
+            --border: #e3e8ee;
+            --danger: #df1b41;
+            --success: #00875a;
+            --white: #ffffff;
+            --jam-navy: #2b3990;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: transparent;
+            color: var(--text-dark);
+            line-height: 1.3;
+            padding: 4px; 
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            max-width: 500px;
+            margin: 0 auto;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view { display: none; flex: 1; flex-direction: column; }
+        .view.active { display: flex; }
+
+        /* Summary View Components */
+        .ai-banner { background: #f6f9fc; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+        .ai-label { font-size: 9px; font-weight: 800; color: var(--stripe-blue); text-transform: uppercase; margin-bottom: 4px; display: block; }
+        .ai-message { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+        .ai-message strong { color: var(--text-dark); font-weight: 700; }
+        
+        .trend-container { padding: 12px 16px; border-bottom: 1px solid var(--border); background: white; }
+        .trend-line-box { height: 35px; width: 100%; display: flex; align-items: flex-end; gap: 4px; }
+        .trend-bar { flex: 1; background: #eef2f7; border-radius: 2px 2px 0 0; transition: height 0.5s; position: relative; }
+        .trend-bar.active { background: var(--stripe-blue); opacity: 0.4; }
+        .trend-bar.peak { background: var(--danger); opacity: 0.8; }
+        .trend-label { position: absolute; bottom: -12px; left: 0; width: 100%; text-align: center; font-size: 7px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+
+        .detail-row { padding: 12px 16px; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .m-card { display: flex; flex-direction: column; }
+        .m-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.3px; }
+        .m-value { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; color: var(--text-dark); }
+
+        .gap-breakdown { padding: 12px 16px; background: #f9fbff; border-bottom: 1px solid var(--border); }
+        .gap-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 11px; }
+        .gap-day { font-weight: 700; color: var(--jam-navy); }
+        .gap-status { font-weight: 800; font-size: 9px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+        .status-short { background: var(--danger); color: white; }
+        .status-ok { background: var(--success); color: white; }
+
+        .bar-container { padding: 14px 16px; }
+        .bar-info { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+        .track { height: 6px; background: #eef2f7; border-radius: 3px; position: relative; overflow: hidden; border: 1px solid var(--border); }
+        .fill-forecast { position: absolute; top: 0; left: 0; height: 100%; width: 85%; background: #e3e8ee; z-index: 1; }
+        .fill-actual { position: relative; height: 100%; background: var(--stripe-blue); z-index: 2; transition: width 1s; }
+
+        /* Attendance List Components */
+        .attendance-list { padding: 0; list-style: none; overflow-y: auto; max-height: 400px; }
+        .employee-row {
+            padding: 14px 16px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .emp-info { display: flex; flex-direction: column; }
+        .emp-name { font-size: 13px; font-weight: 700; color: var(--text-dark); }
+        .emp-role { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+        
+        .status-group { text-align: right; }
+        .status-badge {
+            font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 4px;
+            text-transform: uppercase; letter-spacing: 0.5px; display: inline-block;
+        }
+        .status-badge.on-time { background: #e3fcef; color: var(--success); border: 1px solid #c9f7e5; }
+        .status-badge.late { background: #fff9e6; color: #b78b01; border: 1px solid #feeab3; }
+        .status-badge.absent { background: #fff1f2; color: var(--danger); border: 1px solid #fed7d7; }
+        .clock-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); margin-top: 4px; display: block; font-weight: 600; }
+
+        .footer { padding: 12px 16px; background: var(--white); border-top: 1px solid var(--border); display: flex; gap: 10px; margin-top: auto; }
+        .btn {
+            flex: 1; padding: 10px; border-radius: 4px; font-size: 11px; font-weight: 700;
+            cursor: pointer; border: none; transition: all 0.15s; text-align: center;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .btn-p { background: var(--stripe-blue); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        .btn-s { background: white; color: var(--text-dark); border: 1px solid var(--border); }
+        
+        #toast {
+            position: fixed; bottom: 20px; left: 16px; right: 16px;
+            background: #1a1f36; color: white; padding: 14px;
+            border-radius: 10px; font-size: 12px; font-weight: 600;
+            z-index: 1000; transform: translateY(150px); transition: transform 0.4s;
+            text-align: center; box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        #toast.show { transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-card">
+        <!-- VIEW 1: PREDICTIVE SUMMARY -->
+        <div id="summary-view" class="view active">
+            <div class="ai-banner">
+                <span class="ai-label">Predictive Labor Engine</span>
+                <div class="ai-message" id="ai-msg">Analyzing traffic patterns...</div>
+            </div>
+
+            <div class="trend-container">
+                <div class="trend-line-box" id="trend-bars">
+                    <!-- Labels and bars populated by JS -->
+                </div>
+            </div>
+
+            <div class="detail-row">
+                <div class="m-card">
+                    <span class="m-label" id="tomorrow-label">Tomorrow's Gap</span>
+                    <span class="m-value" id="tomorrow-gap">--</span>
+                </div>
+                <div class="m-card">
+                    <span class="m-label">Projected Traffic</span>
+                    <span class="m-value" id="wknd-forecast" style="color: var(--stripe-blue);">High</span>
+                </div>
+            </div>
+
+            <div class="gap-breakdown">
+                <span class="m-label" style="margin-bottom: 10px; display: block;">Weekend Demand Signal</span>
+                <div class="gap-item">
+                    <span class="gap-day" id="sat-label">Saturday</span>
+                    <span class="gap-status status-short">Understaffed (32%)</span>
+                </div>
+                <div class="gap-item">
+                    <span class="gap-day" id="sun-label">Sunday</span>
+                    <span class="gap-status status-ok">Coverage Aligned</span>
+                </div>
+            </div>
+
+            <div class="bar-container">
+                <div class="bar-info">
+                    <span>Labor vs. Expected Load</span>
+                    <span id="pct-val">--%</span>
+                </div>
+                <div class="track">
+                    <div class="fill-forecast"></div>
+                    <div id="actual-bar" class="fill-actual" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <button class="btn btn-p" onclick="switchView('attendance')">
+                    View Live Attendance
+                </button>
+            </div>
+        </div>
+
+        <!-- VIEW 2: ATTENDANCE DETAIL -->
+        <div id="attendance-view" class="view">
+            <div class="ai-banner" style="background: #ffffff;">
+                 <span class="ai-label" style="color: var(--jam-navy);">Live Attendance Feed</span>
+                 <div class="ai-message" id="live-feed-msg"><strong>5 Members Active</strong> • Real-time status sync.</div>
+            </div>
+            
+            <div class="attendance-list">
+                <div class="employee-row">
+                    <div class="emp-info"><span class="emp-name">Lila Scott</span><span class="emp-role">Floor Associate</span></div>
+                    <div class="status-group"><span class="status-badge on-time">On Time</span><span class="clock-time">In: 08:58 AM</span></div>
+                </div>
+                <div class="employee-row">
+                    <div class="emp-info"><span class="emp-name">Nate Rivera</span><span class="emp-role">Visual Lead</span></div>
+                    <div class="status-group"><span class="status-badge late">Late (12m)</span><span class="clock-time">In: 09:12 AM</span></div>
+                </div>
+                <div class="employee-row">
+                    <div class="emp-info"><span class="emp-name">Kiera Moore</span><span class="emp-role">Floor Associate</span></div>
+                    <div class="status-group"><span class="status-badge on-time">On Time</span><span class="clock-time">In: 09:00 AM</span></div>
+                </div>
+                <div class="employee-row">
+                    <div class="emp-info"><span class="emp-name">Ava Martinez</span><span class="emp-role">Shift Manager</span></div>
+                    <div class="status-group"><span class="status-badge on-time">On Time</span><span class="clock-time">In: 08:45 AM</span></div>
+                </div>
+                <div class="employee-row">
+                    <div class="emp-info"><span class="emp-name">Jace Thompson</span><span class="emp-role">Inventory Spec.</span></div>
+                    <div class="status-group"><span class="status-badge absent">Absent</span><span class="clock-time">No Punch</span></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <button class="btn btn-s" onclick="switchView('summary')">Return</button>
+                <button class="btn btn-p" onclick="showToast('✓ Pivoting to Attendance Manager...')">Manage Detail</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast">Orchestrating...</div>
+
+    <script>
+        const state = {
+            tomorrowGapHours: 12.5,
+            coverageRatio: 0.68
+        };
+
+        function updateDates() {
+            const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const today = new Date();
+            
+            // Tomorrow
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            document.getElementById('tomorrow-label').innerText = `${days[tomorrow.getDay()]}'s Gap`;
+
+            // Saturday/Sunday for the next weekend
+            let sat = new Date(today);
+            sat.setDate(today.getDate() + (6 - today.getDay() + 7) % 7);
+            if (today.getDay() === 6) sat.setDate(today.getDate() + 7); // Ensure next Sat if today is Sat
+
+            let sun = new Date(sat);
+            sun.setDate(sat.getDate() + 1);
+
+            document.getElementById('sat-label').innerText = `${days[sat.getDay()]}, ${months[sat.getMonth()]} ${sat.getDate()}`;
+            document.getElementById('sun-label').innerText = `${days[sun.getDay()]}, ${months[sun.getMonth()]} ${sun.getDate()}`;
+
+            // Populate Trend Graph Labels
+            const trendBars = document.getElementById('trend-bars');
+            trendBars.innerHTML = '';
+            for(let i=-3; i<=3; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const dayName = days[d.getDay()].substring(0,3);
+                const height = 40 + Math.random() * 50;
+                const isToday = i === 0;
+                const isPeak = i > 0 && d.getDay() === 6; // Predict Sat peak
+
+                const bar = document.createElement('div');
+                bar.className = `trend-bar ${isToday ? 'active' : ''} ${isPeak ? 'peak' : ''}`;
+                bar.style.height = height + "%";
+                bar.innerHTML = `<div class="trend-label">${dayName}</div>`;
+                trendBars.appendChild(bar);
+            }
+        }
+
+        function switchView(view) {
+            document.getElementById('summary-view').classList.remove('active');
+            document.getElementById('attendance-view').classList.remove('active');
+            if (view === 'attendance') {
+                document.getElementById('attendance-view').classList.add('active');
+            } else {
+                document.getElementById('summary-view').classList.add('active');
+                updateSummary();
+            }
+        }
+
+        function updateSummary() {
+            const pct = Math.round(state.coverageRatio * 100);
+            document.getElementById('tomorrow-gap').innerText = state.tomorrowGapHours + "h";
+            document.getElementById('pct-val').innerText = pct + "%";
+            document.getElementById('actual-bar').style.width = Math.min(state.coverageRatio * 100, 100) + "%";
+
+            const msg = document.getElementById('ai-msg');
+            if (state.coverageRatio < 0.75) {
+                msg.innerHTML = `Weekend traffic signals are rising. Current staff coverage indicates you are <strong>32% understaffed</strong> for Saturday.`;
+            } else {
+                msg.innerHTML = "✓ Labor Aligned. Forecasted demand matches current schedule.";
+            }
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        // Live Jitter Simulation
+        setInterval(() => {
+            if (document.getElementById('summary-view').classList.contains('active')) {
+                state.tomorrowGapHours = (parseFloat(state.tomorrowGapHours) + (Math.random() > 0.5 ? 0.1 : -0.1)).toFixed(1);
+                updateSummary();
+            }
+        }, 3000);
+
+        updateDates();
+        setTimeout(updateSummary, 300);
+    </script>
+</body>
+</html>
