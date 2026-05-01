@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Build Metrics</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: transparent;
+            padding: 0;
+            margin: 0;
+            min-width: 220px;
+            max-width: 900px;
+            overflow-x: hidden;
+        }
+
+        .widget {
+            min-width: 220px;
+            max-width: 900px;
+            width: 100%;
+            margin: 0;
+            background: #0a0e27;
+            border-radius: 0;
+            overflow: hidden;
+            padding-top: 8px;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #1a1f3a 0%, #0f1229 100%);
+            padding: 14px 16px;
+            border-bottom: 1px solid #1f2937;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .plant-name {
+            font-size: 11px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .date-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+        }
+
+        .status-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #22c55e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* METRICS GRID */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: #1f2937;
+        }
+
+        .metric-card {
+            background: #0f1229;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-card.highlight {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.03) 100%);
+            border-left: 3px solid #22c55e;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+
+        .metric-card.highlight .metric-value {
+            color: #22c55e;
+        }
+
+        .metric-subtext {
+            font-size: 11px;
+            color: #9ca3af;
+            font-weight: 500;
+        }
+
+        .metric-subtext.good {
+            color: #22c55e;
+            font-weight: 700;
+        }
+
+        /* DRR COMPARISON */
+        .drr-section {
+            background: #0f1229;
+            padding: 16px;
+            border-top: 1px solid #1f2937;
+        }
+
+        .drr-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .drr-comparison {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .drr-bar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .drr-bar-label {
+            font-size: 10px;
+            font-weight: 700;
+            color: #9ca3af;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .drr-bar-wrapper {
+            background: #1a1f3a;
+            border-radius: 6px;
+            height: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drr-bar-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .drr-bar-fill.actual {
+            background: linear-gradient(90deg, #22c55e 0%, #10b981 100%);
+        }
+
+        .drr-bar-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* PERFORMANCE BADGE */
+        .performance-badge {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .badge-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #22c55e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 16px;
+            font-weight: 800;
+            color: #22c55e;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metric-value {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="header-left">
+                <div class="plant-name">Production Facility</div>
+                <div class="date-display" id="dateDisplay">August 14</div>
+            </div>
+            <div class="header-right">
+                <div class="status-indicator"></div>
+                <div class="status-text">Operational</div>
+            </div>
+        </div>
+
+        <!-- METRICS GRID -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Safety Status</div>
+                <div class="metric-value">Green</div>
+                <div class="metric-subtext good">Zero incidents today</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">Schedule</div>
+                <div class="metric-value">119</div>
+                <div class="metric-subtext">Units planned</div>
+            </div>
+
+            <div class="metric-card highlight">
+                <div class="metric-label">Build Amount</div>
+                <div class="metric-value">121</div>
+                <div class="metric-subtext good">+2 vs schedule</div>
+            </div>
+
+            <div class="metric-card highlight">
+                <div class="metric-label">On-Time Picks</div>
+                <div class="metric-value">97.8%</div>
+                <div class="metric-subtext good">Above target</div>
+            </div>
+        </div>
+
+        <!-- DRR SECTION -->
+        <div class="drr-section">
+            <div class="drr-header">
+                <div class="section-title">Direct Run Rate (DRR) Performance</div>
+            </div>
+
+            <div class="drr-comparison">
+                <div class="drr-bar-container">
+                    <div class="drr-bar-label">Goal</div>
+                    <div class="drr-bar-wrapper">
+                        <div class="drr-bar-fill" style="width: 89%;">
+                            <div class="drr-bar-value">89%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="drr-bar-container">
+                    <div class="drr-bar-label">Actual</div>
+                    <div class="drr-bar-wrapper">
+                        <div class="drr-bar-fill actual" style="width: 98.4%;">
+                            <div class="drr-bar-value">98.4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-badge">
+                <div class="badge-label">Performance vs Goal</div>
+                <div class="badge-value">+9.4 pts</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DYNAMIC DATE
+        function updateDate() {
+            const now = new Date();
+            const options = { month: 'long', day: 'numeric' };
+            document.getElementById('dateDisplay').textContent = now.toLocaleDateString('en-US', options);
+        }
+
+        updateDate();
+
+        // SIMULATE LIVE DATA (for demo)
+        function simulateMetrics() {
+            const buildAmount = document.querySelector('.metric-card.highlight .metric-value');
+            const currentBuild = parseInt(buildAmount.textContent);
+            
+            // Randomly increment build count
+            if (Math.random() > 0.7) {
+                const newBuild = currentBuild + 1;
+                buildAmount.textContent = newBuild;
+                
+                const schedule = 119;
+                const diff = newBuild - schedule;
+                const subtext = buildAmount.parentElement.querySelector('.metric-subtext');
+                subtext.textContent = diff > 0 ? `+${diff} vs schedule` : `${diff} vs schedule`;
+            }
+        }
+
+        // Update every 30 seconds
+        setInterval(simulateMetrics, 30000);
+    </script>
+</body>
+</html>
