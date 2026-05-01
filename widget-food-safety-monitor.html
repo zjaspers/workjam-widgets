@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap');
+        
+        :root {
+            --danger: #df1b41;
+            --danger-bg: #fff1f2;
+            --success: #00875a;
+            --success-bg: #e3fcef;
+            --warning: #e2b101;
+            --warning-bg: #fff9e6;
+            --text-main: #1a1f36;
+            --text-sec: #4f566b;
+            --border: #e3e8ee;
+            --surface: #ffffff;
+            --navy: #2b3990;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: transparent;
+            color: var(--text-main);
+            line-height: 1.4;
+            padding: 8px 4px;
+            overflow-x: hidden;
+        }
+
+        /* DYNAMIC CRITICAL BANNER */
+        #critical-banner {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            animation: slideIn 0.3s ease-out;
+            text-transform: uppercase;
+        }
+
+        #critical-banner.danger { background: var(--danger); color: white; display: flex; }
+        #critical-banner.warning { background: var(--warning); color: #1a1f36; display: flex; }
+
+        .pulse-icon {
+            width: 8px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        /* Grid Layout */
+        .monitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        /* Card Styling */
+        .food-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            position: relative;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .food-card.is-critical {
+            border-color: var(--danger);
+            background: var(--danger-bg);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .food-name { font-size: 14px; font-weight: 800; letter-spacing: -0.01em; }
+
+        .status-badge {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .status-badge.safe { background: var(--success-bg); color: var(--success); }
+        .status-badge.critical { background: var(--danger); color: white; animation: pulse-red-border 1.5s infinite; }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--text-sec);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 800; color: var(--text-main); }
+        .temp-unit { font-size: 10px; vertical-align: super; }
+
+        /* Food Safety Detail Footer */
+        .safety-detail {
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+            margin-top: auto;
+        }
+
+        .detail-text { font-size: 10px; color: var(--text-sec); font-style: italic; display: block; margin-bottom: 8px; }
+
+        /* Action Button */
+        .action-btn {
+            width: 100%;
+            background: var(--navy);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+        }
+
+        .food-card.is-critical .action-btn { display: block; background: var(--danger); }
+
+        /* Toast Styling */
+        #toast {
+            position: fixed; bottom: 20px; left: 16px; right: 16px;
+            background: #1a1f36; color: white; padding: 14px;
+            border-radius: 10px; font-size: 12px; font-weight: 700;
+            transform: translateY(150%); transition: transform 0.4s;
+            z-index: 1000; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        #toast.show { transform: translateY(0); }
+
+        /* Animations */
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-dot { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes pulse-red-border { 
+            0% { box-shadow: 0 0 0 0 rgba(223, 27, 65, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(223, 27, 65, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(223, 27, 65, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Risk Alert Banner -->
+    <div id="critical-banner">
+        <div class="pulse-icon"></div>
+        <span id="banner-text">Loading sensor data...</span>
+    </div>
+
+    <!-- Monitor View -->
+    <div class="monitor-grid" id="monitor-container"></div>
+
+    <div id="toast">Remediation task triggered in WorkJam.</div>
+
+    <script>
+        const FOOD_DATA = [
+            { id: 1, name: 'Chicken Proteína', temp: 142.1, minTemp: 140, prepTime: new Date(Date.now() - 4500000), limit: 120 },
+            { id: 2, name: 'Adobo Steak', temp: 136.4, minTemp: 140, prepTime: new Date(Date.now() - 6000000), limit: 120 },
+            { id: 3, name: 'Brown Rice', temp: 151.2, minTemp: 140, prepTime: new Date(Date.now() - 2000000), limit: 120 },
+            { id: 4, name: 'Black Beans', temp: 147.8, minTemp: 140, prepTime: new Date(Date.now() - 7500000), limit: 120 }
+        ];
+
+        function getTimerString(startTime) {
+            const diff = Math.floor((new Date() - startTime) / 1000);
+            const mins = Math.floor(diff / 60);
+            const secs = diff % 60;
+            return `${mins}m ${secs.toString().padStart(2, '0')}s`;
+        }
+
+        function render() {
+            const container = document.getElementById('monitor-container');
+            const banner = document.getElementById('critical-banner');
+            const bannerText = document.getElementById('banner-text');
+            let criticalCount = 0;
+
+            container.innerHTML = '';
+
+            FOOD_DATA.forEach(item => {
+                const elapsedMins = Math.floor((new Date() - item.prepTime) / 60000);
+                const isTempCritical = item.temp < item.minTemp;
+                const isTimeCritical = elapsedMins >= item.limit;
+                const isCritical = isTempCritical || isTimeCritical;
+
+                if (isCritical) criticalCount++;
+
+                const card = document.createElement('div');
+                card.className = `food-card ${isCritical ? 'is-critical' : ''}`;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="food-name">${item.name}</span>
+                        <span class="status-badge ${isCritical ? 'critical' : 'safe'}">
+                            ${isCritical ? 'Check Required' : 'Safe'}
+                        </span>
+                    </div>
+                    <div class="stats-row">
+                        <div>
+                            <span class="stat-label">Current Temp</span>
+                            <div class="stat-val" style="color: ${isTempCritical ? 'var(--danger)' : 'inherit'}">
+                                ${item.temp.toFixed(1)}<span class="temp-unit">°F</span>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="stat-label">Holding Time</span>
+                            <div class="stat-val" style="color: ${isTimeCritical ? 'var(--danger)' : 'inherit'}">
+                                ${getTimerString(item.prepTime)}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="safety-detail">
+                        <span class="detail-text">HACCP Goal: >140.0°F Hold</span>
+                        <button class="action-btn" onclick="triggerAction(${item.id})">
+                            Waiting for input from WorkJam...
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            if (criticalCount > 0) {
+                banner.className = 'danger';
+                bannerText.innerText = `⚠ ${criticalCount} Items Out of Range: Actions Triggered`;
+            } else {
+                banner.style.display = 'none';
+            }
+        }
+
+        function triggerAction(id) {
+            const item = FOOD_DATA.find(f => f.id === id);
+            showToast(`✓ Remediation task sent to floor team for ${item.name}. Waiting for verification.`);
+            // Demo reset
+            setTimeout(() => {
+                const idx = FOOD_DATA.findIndex(f => f.id === id);
+                FOOD_DATA[idx].temp = 145 + Math.random() * 5;
+                FOOD_DATA[idx].prepTime = new Date();
+                render();
+            }, 2000);
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        setInterval(() => {
+            FOOD_DATA.forEach(item => {
+                // Simulate slow cooling/drift
+                item.temp -= 0.05;
+            });
+            render();
+        }, 1000);
+
+        render();
+    </script>
+</body>
+</html>
